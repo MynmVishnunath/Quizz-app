@@ -256,113 +256,118 @@
   <!--script-->
   <script>
     //Database setup functions
-  
-  //database connecting function
-  function openDatabase(){
-   return new Promise((res,rej)=>{
-     let request=indexedDB.open("QuizzApp",1);
-     request.onsuccess=evnt=>{
-       let db=evnt.target.result;
-       console.log("connection is successfull");
-       res(db);
-     }
-     request.onerror=error=>{
-     console.log("Failed to connect",error);
-     rej(error);
-     }
-   });
-  }
-  
-  //getting total num of questions
-  function readMeta(){
-    return new Promise((res,rej)=>{
-      let transaction=dbqs.transaction("Quizz meta","readonly");
-      let store=transaction.objectStore("Quizz meta");
-      let readreq=store.get(qzid);
-      readreq.onsuccess=event=>{
-        let obj=event.target.result;
-        totalQuestions=obj.numOfQstns;
-        res();
-      }
-      
-      readreq.onerror=event=>{
-        console.error(event.target.error);
-        rej();
-      
-      }
-    });
-  }
-  
-  //read question object from database
-  
-  function getQuestion(id){
-   return new Promise((res,rej)=>{
-     let transaction=dbqs.transaction("Quizz list","readonly");
-     let store=transaction.objectStore("Quizz list");
-     let readreq=store.get(id);
-     readreq.onsuccess=event=>{
-     let obj=event.target.result;
-     console.log(Object.keys(obj));
-      res(obj);
-      
-     }
-     
-     readreq.onerror=event=>{
-       console.log("cant read question");
-       rej();
-     }
-   });
-  }
-  
-  //store selected option
-  function saveSelection(id,option){
-    return new Promise((res,rej)=>{
-    let transaction=dbqs.transaction("Quizz list","readwrite");
-    let store=transaction.objectStore("Quizz list");
-    let readreq=store.get(id);
-    readreq.onsuccess=event=>{
-    let obj=event.target.result;
-    obj.selectedOption=option;
-    store.put(obj).onsuccess=()=>{
-     res();
+
+    //database connecting function
+    let dbqs;
+    function openDatabase() {
+      return new Promise((res, rej) => {
+        let request = indexedDB.open("QuizzApp", 1);
+        request.onsuccess = evnt => {
+          let db = evnt.target.result;
+          console.log("connection is successfull");
+          res(db);
+        }
+        request.onerror = error => {
+          console.log("Failed to connect", error);
+          rej(error);
+        }
+      });
     }
+
+    //getting total num of questions
+    function readMeta() {
+      return new Promise((res, rej) => {
+        let transaction = dbqs.transaction("Quizz meta", "readonly");
+        let store = transaction.objectStore("Quizz meta");
+        let readreq = store.get(qzid);
+        readreq.onsuccess = event => {
+          let obj = event.target.result;
+          totalQuestions = obj.numOfQstns;
+        
+          res();
+        }
+
+        readreq.onerror = event => {
+          console.error(event.target.error);
+          rej();
+
+        }
+      });
     }
-    readreq.onerror=event=>{
-    console.log("cant read question");
-    rej();
+
+    //read question object from database
+
+    function getQuestion(id) {
+      // console.log("inside getqustn" + id)
+      return new Promise((res, rej) => {
+        // console.log("inside getQuestion func " + dbqs);
+        let transaction = dbqs.transaction("Quizz list", "readonly");
+        let store = transaction.objectStore("Quizz list");
+        let readreq = store.get(id);
+        readreq.onsuccess = event => {
+          let obj = event.target.result;
+          // console.log(Object.keys(obj));
+          console.log(obj);
+          res(obj);
+
+        }
+
+        readreq.onerror = event => {
+          console.log("cant read question");
+          rej();
+        }
+      });
     }
-    
-    transaction.onerror=(event)=>{
-    console.log("failed to store selected option due to",event.target.error);
-    rej();
+
+    //store selected option
+    function saveSelection(id, option) {
+      return new Promise((res, rej) => {
+        let transaction = dbqs.transaction("Quizz list", "readwrite");
+        let store = transaction.objectStore("Quizz list");
+        let readreq = store.get(id);
+        readreq.onsuccess = event => {
+          let obj = event.target.result;
+          obj.selectedOption = option;
+          store.put(obj).onsuccess = () => {
+            res();
+          }
+        }
+        readreq.onerror = event => {
+          console.log("cant read question");
+          rej();
+        }
+
+        transaction.onerror = (event) => {
+          console.log("failed to store selected option due to", event.target.error);
+          rej();
+        }
+      });
     }
-    });
+
+    function clearOption(id) {
+      return new Promise((res, rej) => {
+        let transaction = dbqs.transaction("Quizz list", "readwrite");
+        let store = transaction.objectStore("Quizz list");
+        let readreq = store.get(id);
+        readreq.onsuccess = event => {
+          let obj = event.target.result;
+          obj.selectedOption = "";
+          store.put(obj).onsuccess = () => {
+            res();
+          }
+        }
+        readreq.onerror = event => {
+          console.log("cant clear this, id not matching");
+          rej();
+        }
+
+        transaction.onerror = (event) => {
+          console.log("failed to clear due to", event.target.error);
+          rej();
+        }
+      });
     }
-  
-  function clearOption(id){
-    return new Promise((res,rej)=>{
-    let transaction=dbqs.transaction("Quizz list","readwrite");
-    let store=transaction.objectStore("Quizz list");
-    let readreq=store.get(id);
-    readreq.onsuccess=event=>{
-    let obj=event.target.result;
-    obj.selectedOption="";
-    store.put(obj).onsuccess=()=>{
-    res();
-    }
-    }
-    readreq.onerror=event=>{
-    console.log("cant clear this, id not matching");
-    rej();
-    }
-    
-    transaction.onerror=(event)=>{
-    console.log("failed to clear due to",event.target.error);
-    rej();
-    }
-    });
-  }
-  
+
 
 
 
@@ -744,21 +749,50 @@
     }
   </script>
 
- 
+
   <script type="text/javascript">
-    //Model of card stack object
+    //Main Script
     let index = 0;
+    let totalQuestions;
+    let qzid;
+
+    const cardStack = new CardStack({
+      containerclass: "card-container",
+      noOfcardsOndesk: 5
+    });
+
+    window.onload = async () => {
+      qzid = await localStorage.getItem("selectedValue");
+      dbqs = await openDatabase();
+      console.log("line 2");
+      await readMeta();
+      console.log(qzid);
+
+      //clear all options selected if some one have previously attend this.
+      for (let i = 0; i < totalQuestions; i++) {
+        await clearOption(qzid + i);
+
+      }
+
+    
+    cardStack.cardsOndesk[0].innerHTML = await createComponent(index);
+    cardStack.cardsOndesk[1].innerHTML = await createComponent(++index);
+
+      
+    }
+
     let createComponent = async (qid = 0) => {
+      const currentQzid = qzid + qid;
       const currentQuestion = await getQuestion(currentQzid);
       let component = `
             <div class="qcard">
             <div class="question">
-                ${questionBank[qid].question}
+                ${currentQuestion.question}
             </div>
             <div class="options">`;
 
-      questionBank[qid].options.forEach(x => {
-        component += `<label class="option ${(x.length > 35) ? "large" : ""}">${x}
+      currentQuestion.options.forEach(x => {
+        component += `<label class="option ${(x.length > 30) ? "large" : ""}">${x}
                     <input type="radio" name="option">
                     <span class="radio"></span>
                 </label>`
@@ -767,7 +801,8 @@
       component += `
             </div>
         </div>`;
-      return component;
+
+        return component;
     }
 
     const questionBank = [
@@ -779,7 +814,7 @@
 
       {
         question: "2024 Oscar for Best movie won by",
-        options: ["Anhora", "parasite", "flow", "Dune 2","caddo lake"],
+        options: ["Anhora", "parasite", "flow", "Dune 2", "caddo lake"],
 
       },
       {
@@ -808,16 +843,11 @@
     ]
 
 
-    const cardStack = new CardStack({
-      containerclass: "card-container",
-      noOfcardsOndesk: 5
-    });
-    cardStack.cardsOndesk[0].innerHTML = createComponent(index);
-    cardStack.cardsOndesk[1].innerHTML = createComponent(++index);
+ 
 
-    cardStack.funcWithNxt = () => {
+    cardStack.funcWithNxt = async () => {
       index++;
-      cardStack.cardsOndesk[1].innerHTML = createComponent(index);
+      cardStack.cardsOndesk[1].innerHTML = await createComponent(index);
 
 
     }
