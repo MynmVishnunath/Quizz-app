@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Three.js Cube</title>
+   
+      <style type="text/css">
+      *{
+      margin:0;
+      padding:0;
+      font:inherit;
+      
+      }
+      *,*::before,*::after{
+      box-sizing:border-box;
+      }
+      body{
+       height:100dvh;
+       display:flex;
+       align-items:center;
+       justify-content:center;
+       
+      }
+      #container{
+      background:url("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSgDJGPv8FPgJyfqSn5o4K4r2QGhvU8zlKA_w&usqp=CAU");
+      position:fixed;
+      inset:0;
+      z-index:-1;
+      }
+      .layer1{
+
+          text-align:center;
+          border:5px double #bcbcbc;
+          position:absolute;
+          bottom:15px;
+          height:90px;
+          left:5%;
+          width:90%;
+          font-size:60px;
+          font-weight:990;
+          display:flex;
+          align-items:center;
+          justify-content:center;
+          -webkit-text-stroke:2px #e8e8e8;
+          border-radius:5px;
+      }
+      .frame{
+         width:96%;
+         height:98%;
+         border:2px solid #bcbcbc;
+         left:2.3%;
+         top:1%;
+         position:absolute;
+      }
+      
+      .nav-box{
+        width:300px;
+        height:200px;
+        background: rgba( 243, 235, 235, 0.25 );
+        box-shadow: 0 8px 32px 0 rgba( 31, 38, 135, 0.37 );
+        backdrop-filter: blur( 3.5px );
+        -webkit-backdrop-filter: blur( 3.5px );
+        border-radius: 10px;
+        border: 1px solid rgba( 255, 255, 255, 0.18 );
+        z-index:15;
+        position:absolute;
+        transform:rotate3d(1,1,0,15deg);
+        animation:navflow 10s linear alternate infinite;
+      }
+      
+      .head{
+        width:100%;
+        height:100%;
+        display:flex;
+        align-items:center;
+        justify-content:center;
+        flex-direction:column;
+        
+        .image{
+           width:80px;
+           height:80px;
+           border-radius:50%;
+           
+           img{
+             height:100%;
+             width:100%;
+             object-fit:fill;
+           }
+        }
+        
+        h2{
+          font-size:30px;
+          font-weight:600;
+          color:#e8e8e8;
+        }
+        p{
+         color:#e8e8e8;
+        }
+      }
+      
+      .btn{
+        position:absolute;
+        width:80px;
+        height:80px;
+        background: rgba( 243, 235, 235, 0.25 );
+        box-shadow: 0 8px 32px 0 rgba( 31, 38, 135, 0.37 );
+        backdrop-filter: blur( 7.5px );
+        -webkit-backdrop-filter: blur( 7.5px );
+        border-radius: 10px;
+        border: 1px solid rgba( 255, 255, 255, 0.18 );
+        display:flex;
+        flex-direction:column;
+        align-items:center;
+        justify-content:center;
+        color:#e8e8e8;
+        
+      }
+      .play-btn{
+        top:50px;
+        right:-35px;
+      }
+      .create-btn{
+        bottom:-40px;
+        left:-20px;
+      }
+      .btn-img{
+        width:50px;
+        height:50px;
+        
+        border-radius:50%;
+        
+        img{
+          width:100%;
+          height:100%;
+          border-radius:50%;
+          object-fit:fill;
+        }
+      }
+      /*Animation session*/
+      
+      @keyframes navflow{
+         
+         0% {
+         transform: rotate3d(1, 1, 0, 15deg)
+         rotate(-15deg);
+         }
+         25% {
+         transform: rotate3d(-1, 1, 0, 15deg)
+         rotate(-15deg);
+         }
+         50% {
+         transform: rotate3d(-1, -1, 0, 15deg)
+         rotate(-15deg);
+         }
+         75% {
+         transform: rotate3d(1, -1, 0, 15deg)
+         rotate(-15deg);
+         }
+         100% {
+         transform: rotate3d(1, 1, 0, 10deg)
+         rotate(-15deg);
+         }
+         
+      }
+      /*Media query session*/
+      </style>
+    
+  </head>
+  <body>
+  <!--back ground section-->
+    <div id="container">
+    <div class="frame"></div>
+     <div class="layer1">
+       QUIZ SPACE
+     </div>
+    </div>
+    
+    <!--navigation card-->
+    <div class="nav-box">
+       <div class="head">
+          <div class="image">
+             <img src="unicorn.png" alt="🙂">
+          </div>
+          <h2>Quiz time!!!</h2>
+          <p>Create, Play & Enjoy Quiz</p>
+          
+       </div>
+       <div class="create-btn btn">
+         <div class="btn-img">
+           <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSeUTbyXSz4_X8ZE_c9yyxxJJ6lpps3Lq4n2A&s">
+         </div>
+         <p>Create</p>
+       </div>
+       <div class="play-btn btn">
+         <div class="btn-img">
+          <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTlVAic9sbKlCxzoVztDnbvxv72c9xjJGHxkNaFexU1CKN02xh6Ouot7A4&s=10">
+         </div>
+         <p>Play</p>
+       </div>
+    </div>
+    <!--script handle events-->
+    <script type="text/javascript">
+      let crtbtn=document.querySelector(".create-btn");
+      let plybtn=document.querySelector(".play-btn");
+      crtbtn.addEventListener("click",()=>{
+        window.open("createQuizz.html");
+      });
+      plybtn.addEventListener("click",()=>{
+      window.open("chooseQuizz.html");
+      });
+    </script>
+    <!--script that handle 3D-->
+    <script type="module">
+      import * as THREE from 'https://cdnjs.cloudflare.com/ajax/libs/three.js/0.172.0/three.module.min.js';
+      let container=document.querySelector("#container");
+      // Scene, Camera, Renderer
+      const scene = new THREE.Scene();
+      const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+      const renderer = new THREE.WebGLRenderer({alpha:true});
+      renderer.setSize(window.innerWidth, window.innerHeight);
+      container.appendChild(renderer.domElement);
+     // scene.background = new THREE.Color(0xbcbcbc); // Replace with your desired color (hexadecimal)
+      // Cube
+      /*const geometry = new THREE.BoxGeometry();
+      const material = new THREE.MeshBasicMaterial({ color: 0xff0000 });
+      const cube = new THREE.Mesh(geometry, material);
+      scene.add(cube);*/
+      
+      const material = new THREE.MeshStandardMaterial({
+      color: 0xff00ff, 
+      roughness: 0.2,  // Low roughness for smoothness
+      metalness: 0.5,  // Slight metallic effect
+      emissive: 0x32cd32, // Subtle glow effect
+      });
+      
+      // Function to create the question mark shape using basic geometry
+      function createQuestionMark() {
+      const group = new THREE.Group();
+      const topCurve = new THREE.TorusGeometry(1.5, 0.3, 16, 100, Math.PI-2);
+      const topCurveMesh = new THREE.Mesh(topCurve, material);
+      topCurveMesh.position.set(-0.45, -0.46, 0); // Adjust position for the top curve
+     topCurveMesh.rotation.z = 0.575959; // rotateY for a vertical question mark
+     //topCurveMesh.rotation.y = 360; 
+      group.add(topCurveMesh);
+      
+      // Vertical body of the question mark (cylinder)
+      const verticalBody = new THREE.CylinderGeometry(0.3, 0.3, 1, 32);
+      const verticalBodyMesh = new THREE.Mesh(verticalBody, material);
+      verticalBodyMesh.position.set(0, -1.3, 0); // Position below the top curve
+      group.add(verticalBodyMesh);
+      
+      // Bottom hook of the question mark (small torus)
+      const bottomHook = new THREE.TorusGeometry(1, 0.3, 16, 100, Math.PI-1);
+      const bottomHookMesh = new THREE.Mesh(bottomHook, material);
+      bottomHookMesh.position.set(0, -0.2, 0); // Adjust position for the bottom hook
+     bottomHookMesh.rotation.z = -1.5; // rotateY to align with the question mark
+      group.add(bottomHookMesh);
+      
+      // Dot below the question mark (sphere)
+      const dot = new THREE.SphereGeometry(0.3, 32, 32);
+      const dotMesh = new THREE.Mesh(dot, material);
+      dotMesh.position.set(0, -2.5, 0); // Position below the hook
+      group.add(dotMesh);
+      group.position.set(0, 1, 0);
+      
+      return group;
+
+      
+      }
+      
+      // Create the question mark shape
+      const questionMark = createQuestionMark();
+      scene.add(questionMark);
+      
+      //Torus shape
+      function torus(){
+      const geometry = new THREE.TorusGeometry( 1.5, 0.3, 16, 100,6.2831 ); 
+      const material2 = new THREE.MeshBasicMaterial( { color: 0xff1493 } ); 
+      const torus = new THREE.Mesh( geometry, material2 ); 
+      torus.position.set(-3, 4, -5);
+      return torus;
+      }
+      
+      function torus2(){
+        const geometry = new THREE.TorusGeometry( 1.5, 0.4, 13, 3,6.2831 ); 
+        const material2 = new THREE.MeshBasicMaterial( { color: 0xabcdef } ); 
+        const torus = new THREE.Mesh( geometry, material2 ); 
+        torus.position.set(5, -2.5, -5);
+        return torus;
+      }
+      
+      function to_Knot(){
+       console.log("hello");
+        const geometry = new THREE.TorusKnotGeometry( 13, 0.1, 300, 16,15,13 ); 
+        const material = new THREE.MeshBasicMaterial( { color: 0x00ffff } ); 
+        const torusKnot = new THREE.Mesh( geometry, material );
+        torusKnot.position.set(30, 50, -91);
+        return torusKnot;
+      }
+      
+      let toru_s=torus();
+      scene.add( toru_s );
+      
+      let toru_s2=torus2();
+      scene.add(toru_s2);
+      
+      let torusKno_t=to_Knot();
+      scene.add(torusKno_t);
+      // Camera Position
+      camera.position.z = 7;
+
+      // Animation Loop
+      function animate() {
+        requestAnimationFrame(animate);
+        //questionMark.rotation.x += 0.01;
+       questionMark.rotation.y += 0.005;
+       toru_s.rotation.x+=0.01;
+       toru_s.rotation.y+=0.01;
+       toru_s2.rotation.x+=0.02;
+       toru_s2.rotation.y+=0.01;
+       torusKno_t.rotation.x+=0.015;
+       torusKno_t.rotation.y+=0.008;
+        renderer.render(scene, camera);
+      }
+      animate();
+    </script>
+  </body>
+</html>

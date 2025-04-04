@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quiz App</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      margin:0;
+      height:100dvh;
+      width:100%;
+      
+      
+    }
+    /*nav section in result page*/
+    .naviconcntnr{
+    width:105px;
+    height:40px;
+    background:#cfcfcf;
+    position:fixed;
+    bottom:25px;
+    right:22px;
+    display:flex;
+    gap:2px;
+    justify-content:space-around;
+    border-radius:10px;
+    overflow:hidden;
+    z-index:2;
+    }
+    .naviconcntnr .icons{
+    width:40px;
+    height:40px;
+    }
+    .quiz-container {
+      width:100%;
+      height:100%;
+      display:grid;
+      text-align:center;
+      justify-items:center;
+      grid-template-rows:1fr 80px;
+
+    }
+    #imagebx,.img{
+       width:400px;
+       height:200px;
+       border:1px solid black;
+       object-fit:fill;
+       margin-top:5px;
+    }
+    .question {
+      font-size: 20px;
+      margin-top:20px;
+      margin-bottom: 20px;
+    }
+    .options {
+      list-style: none;
+      padding: 0;
+    }
+   
+    .options li {
+      margin: 10px 0;
+    }
+    .options input {
+      margin-right: 10px;
+      
+    }
+    
+    .disabled-radio{
+     color:red;
+     background-color:red;
+     opacity:1;
+    }
+    
+    .btnsection{  
+     
+     display:grid;
+     grid-template-columns:1fr 3fr 1fr;
+     justify-items:center;
+     gap:20px;
+     position:absolute;
+     left:50%;
+     transform:translateX(-50%);
+     bottom:15px;
+    }
+    .btn {
+      padding:0 ;
+      font-size: 40px;
+      margin-top: 20px;
+      cursor: pointer;
+      
+      
+    }
+    .sbmt{
+     padding: 10px 20px;
+      width:200px;
+      font-size:16px;
+      
+      
+    }
+    .go{
+      border:none;
+      background:none;
+    }
+    .hidden {
+      display: none;
+    }
+    
+    .container {
+    display: block;
+    position: relative;
+    padding-left: 35px;
+    margin-bottom: 12px;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    }
+    
+    /* Hide the browser's default radio button */
+    .container input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    }
+    
+    /* Create a custom radio button */
+    .checkmark {
+    position: absolute;
+    top: 0;
+    left: 1;
+    margin-left:-35px;
+    height: 20px;
+    width: 20px;
+    background-color: #eee;
+    border-radius: 50%;
+    }
+    
+    /* On mouse-over, add a grey background color */
+    .container:hover input ~ .checkmark {
+    background-color: #ccc;
+    }
+    
+    /* When the radio button is checked, add a blue background */
+    .container input:checked ~ .checkmark {
+    background-color: #2196F3;
+    }
+    
+    /* Create the indicator (the dot/circle - hidden when not checked) */
+    .checkmark:after {
+    content: "";
+    position: absolute;
+    display: none;
+    }
+    
+    /* Show the indicator (dot/circle) when checked */
+    .container input:checked ~ .checkmark:after {
+    display: block;
+    }
+    
+    /* Style the indicator (dot/circle) */
+    .container .checkmark:after {
+    top: 6px;
+    left: 6px;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: white;
+    }
+  </style>
+</head>
+<body>
+  <div class="quiz-container">
+    <div id="quiz">
+     <div class="questionsection">
+      <img class="img" alt="question image" id="imagebx" >
+      <div class="question" id="question">Question will appear here</div>
+      <ul class="options" id="options"></ul></div>
+      <div class="btnsection">
+      <button class="btn go " id="prev">⬅️</button>
+      <button class="btn sbmt" id="submit" disabled>Submit</button>
+      <button class="btn go " id="next">➡️</button>
+    </div>
+    </div>
+    <div id="result" class="hidden">
+    <div class="naviconcntnr" >
+    <a href="quizzHome.html" >
+    <svg class="icons"  aria-hidden="true" role="img"  preserveAspectRatio="xMidYMid meet" viewBox="0 0 21 25"><g ><path d="M2 13l9.293-9.293a1 1 0 0 1 1.414 0L22 13h-2v8a1 1 0 0 1-1 1h-5v-7h-4v7H5a1 1 0 0 1-1-1v-8H2z" fill="white"/></g></svg>
+    </a>
+    <a href="chooseQuizz.html" >
+    <svg class="icons"  aria-hidden="true" role="img" preserveAspectRatio="xMidYMid meet" viewBox="0 0 37 36"><path d="M32 6H4a2 2 0 0 0-2 2v20a2 2 0 0 0 2 2h28a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2zM19 22H9a1 1 0 0 1 0-2h10a1 1 0 0 1 0 2zm8-4H9a1 1 0 0 1 0-2h18a1 1 0 0 1 0 2zm0-4H9a1 1 0 0 1 0-2h18a1 1 0 0 1 0 2z"  fill="aliceblue" /></svg>
+    </a>
+    </div>
+      <h2>Quiz Completed!</h2>
+      <p id="score">Your score will appear here</p>
+      <a  href="#" onclick="checkHistory()">Check history</a>
+    </div>
+  </div>
+
+  <script>
+  
+  //connect to indexDB when page is loading
+  let qdbs;
+  let totalQuestions;
+  let qzid;
+  window.onload=async ()=>{
+    qzid = await localStorage.getItem("selectedValue");
+    dbqs = await openDatabase();
+    console.log("line 2");
+    await readMeta();
+    console.log(qzid);
+    
+    //clear all options selected if some one have previously attend this.
+    for(let i=0;i<totalQuestions;i++){
+     await clearOption(qzid+i);
+    
+    }
+    
+    // Initialize Quiz
+    loadQuestion();
+  }
+  
+  //Database setup functions
+  
+  //database connecting function
+  function openDatabase(){
+   return new Promise((res,rej)=>{
+     let request=indexedDB.open("QuizzApp",1);
+     request.onsuccess=evnt=>{
+       let db=evnt.target.result;
+       console.log("connection is successfull");
+       res(db);
+     }
+     request.onerror=error=>{
+     console.log("Failed to connect",error);
+     rej(error);
+     }
+   });
+  }
+  
+  //getting total num of questions
+  function readMeta(){
+    return new Promise((res,rej)=>{
+      let transaction=dbqs.transaction("Quizz meta","readonly");
+      let store=transaction.objectStore("Quizz meta");
+      let readreq=store.get(qzid);
+      readreq.onsuccess=event=>{
+        let obj=event.target.result;
+        totalQuestions=obj.numOfQstns;
+        res();
+      }
+      
+      readreq.onerror=event=>{
+        console.error(event.target.error);
+        rej();
+      
+      }
+    });
+  }
+  
+  //read question object from database
+  
+  function getQuestion(id){
+   return new Promise((res,rej)=>{
+     let transaction=dbqs.transaction("Quizz list","readonly");
+     let store=transaction.objectStore("Quizz list");
+     let readreq=store.get(id);
+     readreq.onsuccess=event=>{
+     let obj=event.target.result;
+     console.log(Object.keys(obj));
+      res(obj);
+      
+     }
+     
+     readreq.onerror=event=>{
+       console.log("cant read question");
+       rej();
+     }
+   });
+  }
+  
+  //store selected option
+  function saveSelection(id,option){
+    return new Promise((res,rej)=>{
+    let transaction=dbqs.transaction("Quizz list","readwrite");
+    let store=transaction.objectStore("Quizz list");
+    let readreq=store.get(id);
+    readreq.onsuccess=event=>{
+    let obj=event.target.result;
+    obj.selectedOption=option;
+    store.put(obj).onsuccess=()=>{
+     res();
+    }
+    }
+    readreq.onerror=event=>{
+    console.log("cant read question");
+    rej();
+    }
+    
+    transaction.onerror=(event)=>{
+    console.log("failed to store selected option due to",event.target.error);
+    rej();
+    }
+    });
+    }
+  
+  function clearOption(id){
+    return new Promise((res,rej)=>{
+    let transaction=dbqs.transaction("Quizz list","readwrite");
+    let store=transaction.objectStore("Quizz list");
+    let readreq=store.get(id);
+    readreq.onsuccess=event=>{
+    let obj=event.target.result;
+    obj.selectedOption="";
+    store.put(obj).onsuccess=()=>{
+    res();
+    }
+    }
+    readreq.onerror=event=>{
+    console.log("cant clear this, id not matching");
+    rej();
+    }
+    
+    transaction.onerror=(event)=>{
+    console.log("failed to clear due to",event.target.error);
+    rej();
+    }
+    });
+  }
+  
+
+  
+  //UI operations
+  
+  let currentQuestionIndex = 0;
+  let score = 0;
+  let currentQzid;
+  
+  const quizEl = document.getElementById("quiz");
+  const imgbx=document.getElementById("imagebx");
+  const questionEl = document.getElementById("question");
+  const optionsEl = document.getElementById("options");
+  const submitBtn = document.getElementById("submit");
+  const nextBtn = document.getElementById("next");
+  const resultEl = document.getElementById("result");
+  const scoreEl = document.getElementById("score");
+  const prevBtn = document.getElementById("prev");
+  
+  //question display function.
+  async function loadQuestion() {
+  // Reset the state
+  submitBtn.disabled = true;
+  //nextBtn.classList.add("hidden");
+  optionsEl.innerHTML = "";
+  currentQzid=qzid+currentQuestionIndex;
+  // Load the current question and options
+  const currentQuestion = await getQuestion(currentQzid);
+  
+  if(currentQuestion.image){
+    imgbx.classList.remove("hidden");
+    imgbx.src=currentQuestion.image;
+  }else{
+    imgbx.classList.add("hidden");
+  }
+  questionEl.innerHTML= currentQuestion.question;
+  currentQuestion.options.forEach((option) => {
+  const li = document.createElement("li");
+  li.innerHTML = `
+  <label>
+  <input type="radio" name="option" value="${option}" ${(currentQuestion.selectedOption===option)?"checked":""}>
+  ${option}
+  </label>
+  `;
+  
+  optionsEl.appendChild(li);
+  });
+  
+  // Enable submit button when an option is selected
+  optionsEl.addEventListener("change", () => {
+  submitBtn.disabled = false;
+  });
+  }
+  
+  async function checkAnswer() {
+  const selectedOption = document.querySelector("input[name='option']:checked").value;
+  //passing qz id, option that choosed and a function for imcrementing score
+  await saveSelection(currentQzid,selectedOption);
+  submitBtn.disabled = true;
+  nextBtn.classList.remove("hidden");
+  }
+  
+  async function nextQuestion() {
+  console.log(totalQuestions);
+  if (currentQuestionIndex < totalQuestions-1) {
+  currentQuestionIndex++;
+  loadQuestion();
+  } else {
+  // End of quiz
+  if(confirm("Do you want to finish quizz")){
+  quizEl.classList.add("hidden");
+  resultEl.classList.remove("hidden");
+  for(let i=0;i<totalQuestions;i++){
+    let qstnid=qzid+i;
+    let obj=await getQuestion(qstnid);
+    if(obj.selectedOption===obj.answer){
+      score++;
+    }
+  }
+  
+  scoreEl.textContent = `You scored ${score} out of ${totalQuestions}`;}
+  }
+  }
+  
+  
+  function prevQuestion(){
+    
+    
+    if (currentQuestionIndex > 0) {
+    currentQuestionIndex--;
+    loadQuestion();
+    } else {
+    // End of quiz
+   
+    }
+  }
+  // Event Listeners
+  submitBtn.addEventListener("click", checkAnswer);
+  nextBtn.addEventListener("click", nextQuestion);
+  prevBtn.addEventListener("click",prevQuestion);
+  
+
+  
+  class QuestionHis{
+    static qindex=0;
+     constructor(Question){
+        
+        let Qbox=document.createElement("div");
+        document.body.appendChild(Qbox);
+        const imgbx=document.createElement("img");
+        const questionEl = document.createElement("div");
+        const optionsEl = document.createElement("ul");
+        const seprator=document.createElement("hr");
+        Qbox.appendChild(imgbx);
+        Qbox.appendChild(questionEl);
+        Qbox.appendChild(optionsEl);
+        Qbox.appendChild(seprator);
+        //add class
+        imgbx.classList.add("img");
+        questionEl.classList.add("question");
+        optionsEl.classList.add("options");
+        
+        const currentQuestion = Question;
+        
+        if(currentQuestion.image){
+        imgbx.classList.remove("hidden");
+        imgbx.src=currentQuestion.image;
+        }else{
+        imgbx.classList.add("hidden");
+        }
+        questionEl.innerHTML= currentQuestion.question;
+        currentQuestion.options.forEach((option) => {
+        const li = document.createElement("li");
+       
+        li.innerHTML=`<label class="container" ${this.rightWrong(option,currentQuestion)}>
+        
+        <input type="radio" name="option${QuestionHis.qindex}"  ${(currentQuestion.selectedOption===option)?"checked":""} disabled >
+        <span class="checkmark"></span>
+        ${option}
+        </label>`;
+        
+        optionsEl.appendChild(li);
+       
+          
+          
+        
+        });
+        QuestionHis.qindex++;
+        
+     }
+     rightWrong(opt,qst){
+       if(opt===qst.answer){
+         return `style="color:green;"`
+       }else if(opt===qst.selectedOption&&qst.selectedOption!=qst.answer){
+         return `style="color:red;"`
+       }
+     }
+     
+  }
+  
+ async function checkHistory(){
+ //adding navigation button
+    document.body.innerHTML=`<div class="naviconcntnr" >
+    <a href="quizzHome.html" >
+    <svg class="icons"  aria-hidden="true" role="img"  preserveAspectRatio="xMidYMid meet" viewBox="0 0 21 25"><g ><path d="M2 13l9.293-9.293a1 1 0 0 1 1.414 0L22 13h-2v8a1 1 0 0 1-1 1h-5v-7h-4v7H5a1 1 0 0 1-1-1v-8H2z" fill="white"/></g></svg>
+    </a>
+    <a href="chooseQuizz.html" >
+    <svg class="icons"  aria-hidden="true" role="img" preserveAspectRatio="xMidYMid meet" viewBox="0 0 37 36"><path d="M32 6H4a2 2 0 0 0-2 2v20a2 2 0 0 0 2 2h28a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2zM19 22H9a1 1 0 0 1 0-2h10a1 1 0 0 1 0 2zm8-4H9a1 1 0 0 1 0-2h18a1 1 0 0 1 0 2zm0-4H9a1 1 0 0 1 0-2h18a1 1 0 0 1 0 2z"  fill="aliceblue" /></svg>
+    </a>
+    </div>`;
+    for(let i=0;i<totalQuestions;i++){
+      let qobj=await getQuestion(qzid+i);
+      new QuestionHis(qobj);
+    }
+    
+  }
+  
+  
+  </script>
+</body>

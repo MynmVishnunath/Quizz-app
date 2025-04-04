@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>play quiz</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            width: 100%;
+            height: 100dvh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        .card {
+            display: grid;
+            grid-template-rows: 160px 1fr;
+            width: 250px;
+            height: 400px;
+            background-color: rgba(255, 99, 71, 0.51);
+            /* background-color: #ececec; */
+            border-radius: 5px;
+            
+
+
+        }
+
+        .question {
+
+            width: 95%;
+            height: 150px;
+            background-color: white;
+            margin: auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            font-weight: 500;
+            border-radius: 5px;
+        }
+
+        .options {
+            margin: auto;
+            display: grid;
+            grid-template-columns: 1fr;
+            grid-template-rows: repeat(1, 1fr);
+            /* align-items: center; */
+            justify-content: center;
+            width: 88%;
+            gap: 15px;
+            position: relative;
+        
+
+        }
+
+        .option {
+            width: 100%;
+            height: 30px;
+            background-color: white;
+            display: grid;
+            grid-template-columns: 30px 1fr 0;
+            align-items: center;
+            border-radius: 5px;
+
+
+        }
+
+        .option input {
+            opacity: 0;
+            grid-row: 1;
+            grid-column: 1 / 2;
+        }
+
+        .option .radio {
+            order: -1;
+            width: 15px;
+            height: 15px;
+            border-radius: 50%;
+            grid-row: 1;
+            grid-column: 1 / 2;
+            background-color: black;
+            justify-self: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+        }
+
+        .option .radio::after {
+            content: "";
+            width: 9px;
+            height: 9px;
+            background-color: white;
+            border-radius: 50%;
+            display: none;
+        }
+
+        /* on hover style */
+        .option input:hover~.radio{
+            background-color: silver;
+        }
+        .option input:hover~.radio::after{
+            display: block;
+        }
+        /* On check style */
+        .option input:checked~.radio {
+            background-color: green;
+        }
+
+        .option input:checked~.radio::after {
+            display: block;
+        }
+
+
+        .option:has(input:checked) {
+            border: 1px solid green;
+            box-shadow: 0.5px 0.5px 3px green;
+        }
+
+        .large:focus-within {
+            font-family: 'Courier New', Courier, monospace;
+            position: absolute;
+            top: 0;
+            height: 150px;
+            
+        }
+    </style>
+</head>
+
+<body>
+    <section>
+        <div class="card">
+            <div class="question">
+                what is the answer of this question?
+            </div>
+            <div class="options">
+
+                <label class="option large">Option 1
+                    <input type="radio" name="option">
+                    <span class="radio"></span>
+                </label>
+                <label class="option large">Option 1
+                    <input type="radio" name="option">
+                    <span class="radio"></span>
+                </label>
+                <label class="option">Option 1
+                    <input type="radio" name="option">
+                    <span class="radio"></span>
+                </label>
+                <label class="option">Option 1
+                    <input type="radio" name="option">
+                    <span class="radio"></span>
+                </label>
+
+            </div>
+        </div>
+    </section>
+    <script>
+        let largeBox = document.querySelectorAll(".large");
+        largeBox.forEach(x=>{
+            x.addEventListener("dblclick",enlargeBox);
+        })
+    
+    </script>
+</body>
+
+</html>

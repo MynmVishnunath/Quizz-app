@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>swipe card</title>
+    <link
+  rel="stylesheet"
+  href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"
+/>
+    <style>
+        .swiper{
+            width: 300px;
+            height: 500px;
+            
+        }
+
+        .swiper-slide{
+            width: 200px;
+            height: 300px;
+            background-color: olivedrab;
+            color: white;
+            font-size: 30px;
+            padding: 50px;
+            box-sizing:border-box;
+            margin: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="swiper">
+        <div class="swiper-wrapper">
+            <div class="swiper-slide">slider1</div>
+            <!-- <div class="swiper-slide">slider2</div>
+            <div class="swiper-slide">slider3</div> -->
+        </div>
+    </div>
+    <!-- <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script> -->
+    <script>
+        // const swiper=new swiper('.swiper',{
+        //     effect:"card",
+        //     grabcursor:true,
+
+        // })
+        const swiper=document.querySelector(".swiper-slide");
+        let swipeThis;
+        swiper.addEventListener("mousedown",(e)=>{
+            console.log("hello");
+            swiperX=e.clientX;
+            swipeY=e.clientY;
+            swipeThis=swiper;
+            document.addEventListener("mousemove",e=>{
+                console.log(e.clientX,e.clientY);
+                swipeThis.style.transform=`translateX(${swiperX-e.clientX})`;
+            })
+
+        });
+      
+    </script>
+</body>
+</html>
