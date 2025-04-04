@@ -50,14 +50,14 @@
 
     }
 
-    .card::after{
+    .card::after {
       content: "";
       background-color: rgb(254, 252, 252);
       border-radius: 3px;
       position: absolute;
       width: 95%;
       height: 150px;
-      top:5px;
+      top: 5px;
       right: 5px;
       z-index: -1;
     }
@@ -254,6 +254,119 @@
 
   </div>
   <!--script-->
+  <script>
+    //Database setup functions
+  
+  //database connecting function
+  function openDatabase(){
+   return new Promise((res,rej)=>{
+     let request=indexedDB.open("QuizzApp",1);
+     request.onsuccess=evnt=>{
+       let db=evnt.target.result;
+       console.log("connection is successfull");
+       res(db);
+     }
+     request.onerror=error=>{
+     console.log("Failed to connect",error);
+     rej(error);
+     }
+   });
+  }
+  
+  //getting total num of questions
+  function readMeta(){
+    return new Promise((res,rej)=>{
+      let transaction=dbqs.transaction("Quizz meta","readonly");
+      let store=transaction.objectStore("Quizz meta");
+      let readreq=store.get(qzid);
+      readreq.onsuccess=event=>{
+        let obj=event.target.result;
+        totalQuestions=obj.numOfQstns;
+        res();
+      }
+      
+      readreq.onerror=event=>{
+        console.error(event.target.error);
+        rej();
+      
+      }
+    });
+  }
+  
+  //read question object from database
+  
+  function getQuestion(id){
+   return new Promise((res,rej)=>{
+     let transaction=dbqs.transaction("Quizz list","readonly");
+     let store=transaction.objectStore("Quizz list");
+     let readreq=store.get(id);
+     readreq.onsuccess=event=>{
+     let obj=event.target.result;
+     console.log(Object.keys(obj));
+      res(obj);
+      
+     }
+     
+     readreq.onerror=event=>{
+       console.log("cant read question");
+       rej();
+     }
+   });
+  }
+  
+  //store selected option
+  function saveSelection(id,option){
+    return new Promise((res,rej)=>{
+    let transaction=dbqs.transaction("Quizz list","readwrite");
+    let store=transaction.objectStore("Quizz list");
+    let readreq=store.get(id);
+    readreq.onsuccess=event=>{
+    let obj=event.target.result;
+    obj.selectedOption=option;
+    store.put(obj).onsuccess=()=>{
+     res();
+    }
+    }
+    readreq.onerror=event=>{
+    console.log("cant read question");
+    rej();
+    }
+    
+    transaction.onerror=(event)=>{
+    console.log("failed to store selected option due to",event.target.error);
+    rej();
+    }
+    });
+    }
+  
+  function clearOption(id){
+    return new Promise((res,rej)=>{
+    let transaction=dbqs.transaction("Quizz list","readwrite");
+    let store=transaction.objectStore("Quizz list");
+    let readreq=store.get(id);
+    readreq.onsuccess=event=>{
+    let obj=event.target.result;
+    obj.selectedOption="";
+    store.put(obj).onsuccess=()=>{
+    res();
+    }
+    }
+    readreq.onerror=event=>{
+    console.log("cant clear this, id not matching");
+    rej();
+    }
+    
+    transaction.onerror=(event)=>{
+    console.log("failed to clear due to",event.target.error);
+    rej();
+    }
+    });
+  }
+  
+
+
+
+  </script>
   <script type="text/javascript">
     class Swiper {
       constructor(elem = document) {
@@ -365,7 +478,6 @@
       }
     }
   </script>
-
   <script type="text/javascript">
 
 
@@ -632,62 +744,42 @@
     }
   </script>
 
-  <script>
-    // script related to form
-    let largebox = document.querySelectorAll(".large");
-    function enlarge(e) {
-
-    }
-    largebox.forEach(x => {
-      x.addEventListener("dblclick", enlarge)
-    })
-
-
-  </script>
+ 
   <script type="text/javascript">
     //Model of card stack object
     let index = 0;
-    let createComponent = (qid = 0) => {
-      const component = `
+    let createComponent = async (qid = 0) => {
+      const currentQuestion = await getQuestion(currentQzid);
+      let component = `
             <div class="qcard">
             <div class="question">
                 ${questionBank[qid].question}
             </div>
-            <div class="options">
+            <div class="options">`;
 
-                <label class="option ${(questionBank[qid].options[0].length > 35) ? "large" : ""}">${questionBank[qid].options[0]}
+      questionBank[qid].options.forEach(x => {
+        component += `<label class="option ${(x.length > 35) ? "large" : ""}">${x}
                     <input type="radio" name="option">
                     <span class="radio"></span>
-                </label>
-                <label class="option ${(questionBank[qid].options[0].length > 35) ? "large" : ""}">${questionBank[qid].options[1]}
-                    <input type="radio" name="option">
-                    <span class="radio"></span>
-                </label>
-                <label class="option ${(questionBank[qid].options[0].length > 35) ? "large" : ""}">${questionBank[qid].options[2]}
-                    <input type="radio" name="option">
-                    <span class="radio"></span>
-                </label>
-                <label class="option ${(questionBank[qid].options[0].length > 35) ? "large" : ""}">${questionBank[qid].options[3]}
-                    <input type="radio" name="option">
-                    <span class="radio"></span>
-                </label>
+                </label>`
+      })
 
+      component += `
             </div>
-        </div>
-    `;
-
+        </div>`;
       return component;
     }
+
     const questionBank = [
       {
         question: "Ponman movie director",
-        options: ["jeethu joseph", "jothis shankar", "jithu madhavan", "jimmy carry"],
+        options: ["jeethu joseph", "jothis shankar", "jithu madhavan"],
 
       },
 
       {
         question: "2024 Oscar for Best movie won by",
-        options: ["Anhora", "parasite", "flow", "Dune 2"],
+        options: ["Anhora", "parasite", "flow", "Dune 2","caddo lake"],
 
       },
       {

@@ -8,8 +8,7 @@
 <script>
   async function select(data){
 //alert("hellook");
-//alert(data);
-await localStorage.setItem("selectedValue",data);
+await localStorage.setItem("selectedValue",''+data);
 window.open("quizz_home.html");
 } 
 </script>
@@ -56,7 +55,7 @@ function createElement(data){
   // box.addEventListener("click",()=>{
   //   select(data.key);
   // });
-  box.setAttribute("onclick",`select(${data.key})`);
+  box.setAttribute("onclick",`select('${data.key}')`);
   box.innerHTML=`<a href="#">${data.value.Quizname}</a>(${data.value.numOfQstns})`
   qzlist.appendChild(box);
 }
