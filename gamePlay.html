@@ -1,0 +1,987 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; " />
+<meta name="viewport"  content="width=device-width, initial-scale=1.0"/>
+<title>play quizz</title>
+<style type="text/css">
+:root{
+ --cloud:#f5f5f5;
+}
+*{
+box-sizing:border-box;
+margin:0;
+}
+body{
+width:100%;
+height:100dvh;
+}
+#container{
+position:fixed;
+z-index:-100;
+  background:url("Bg4.jpg");
+  background-size:100% 100%;
+  width:100%;
+  height:100%;
+  overflow:hidden;
+}
+.cloudbx{
+ width:100%;
+ height:400px;
+ position:relative;
+}
+.cloud{
+position:absolute;
+width:300px;
+height:150px;
+background:var(--cloud);
+margin:auto;
+border-radius:150px;
+filter:drop-shadow(3px 3px 2px #666666);
+transform:scale(0.4);
+animation-name:moveCloud;
+animation-timing-function:linear;
+animation-iteration-count:infinite;
+animation-direction:normal;
+left:-300px;
+
+
+}
+.foam1,.foam2{
+  position:absolute;
+  background:var(--cloud);
+  border-radius:50%;
+}
+.foam1{
+  width:100px;
+  height:100px;
+  top:-50px;
+  left:30px;
+  
+}
+.foam2{
+  width:150px;
+  height:200px;
+  top:-80px;
+  left:100px;
+  
+}
+.cloud:nth-child(1) {
+--i:3.5;
+top:0px;
+animation-duration:calc(var(--i)*10s);
+transform:scale(0.35);
+animation-delay:2s;
+}
+
+.cloud:nth-child(2) {
+--i:2;
+top:80px;
+animation-duration:calc(var(--i)*10s);
+transform:scale(0.2);
+
+}
+.cloud:nth-child(3){
+--i:3;
+top:50px;
+animation-duration:calc(var(--i)*10s);
+transform:scale(0.3);
+
+
+}
+.cloud:nth-child(4){
+--i:1.8;
+top:10px;
+animation-duration:calc(var(--i)*10s);
+transform:scale(0.3);
+
+
+}
+.cloud:nth-child(5){
+--i:2.5;
+top:120px;
+animation-duration:calc(var(--i)*10s);
+transform:scale(0.2);
+
+}
+
+
+@keyframes moveCloud{
+ 0%{
+  left:-200px;
+ }
+ 100%{
+   left:100%;
+ }
+}
+
+@media  (width<700px) {
+  #container{
+  background:url("Bg.jpg");
+  background-size:100% 100%;
+  }
+
+  
+}
+</style>
+<style type="text/css">
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+
+
+  body {
+    position: relative;
+    width: 100%;
+    height: 100dvh;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+
+  }
+
+  .card-container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: grid;
+    justify-items: center;
+    align-items: center;
+    overflow: hidden;
+
+
+  }
+
+  .card {
+    display: grid;
+    width: 250px;
+    height: 400px;
+    background:#8ec0e4;
+    position: absolute;
+    border: 1px solid black;
+    border-radius: 5px;
+
+
+
+  }
+
+  .card::after {
+    content: "";
+    background-color: rgb(254, 252, 252);
+    border-radius: 3px;
+    position: absolute;
+    width: 95%;
+    height: 150px;
+    top: 5px;
+    right: 5px;
+    z-index: -1;
+  }
+
+  .card:nth-last-child(1) {
+    transform: translate3d(0px, 0px, 0px) rotate(0deg);
+
+    /*background:orange;*/
+
+  }
+
+  .card:nth-last-child(2) {
+
+    transform: translate3d(4px, 4px, 0px) rotate(4deg);
+    transition: all 0.5s;
+  }
+
+  .card:nth-last-child(3) {
+    transform: translate3d(8px, 8px, 0px) rotate(8deg);
+    transition: all 0.5s;
+
+  }
+
+  .card:nth-last-child(4) {
+    transform: translate3d(12px, 12px, 0px) rotate(12deg);
+    transition: all 0.5s;
+
+  }
+
+  .card:nth-last-child(5) {
+    transform: translate3d(16px, 16px, 0px) rotate(16deg);
+    transition: all 0.5s;
+  }
+
+  .next {
+    background: red;
+    z-index: -1;
+    opacity: 0.1;
+    transition: all 0.5s;
+
+
+
+
+  }
+
+  .previous {
+    animation: previouscall 0.5s linear backwards;
+  }
+
+  @keyframes previouscall {
+    0% {
+      z-index: -1;
+      opacity: 0.5;
+      transform: translate3d(0px, 0px, 0px) scale(0.5) rotate(16deg);
+
+    }
+
+    50% {
+
+      z-index: -1;
+      opacity: 0.8;
+      transform: translate3d(calc(var(--i)*150px), 0px, 0px) scale(0.8) rotate(12deg);
+    }
+
+    100% {
+      z-index: 0;
+      opacity: 1;
+      transform: translate3d(0px, 0px, 0px) scale(1) rotate(0);
+    }
+
+  }
+</style>
+<style type="text/css">
+  /*style related to quesstion and options shown in the card */
+  .qcard {
+    display: grid;
+    grid-template-rows: 160px 1fr;
+    width: 100%;
+    height: 100%;
+    background-color:#8ec0e4;
+    /* background-color: #ececec; */
+    border-radius: 5px;
+
+
+
+  }
+
+  .question {
+
+    width: 95%;
+    height: 150px;
+    background-color: white;
+    margin: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    font-weight: 500;
+    border-radius: 5px;
+  }
+
+  .options {
+    margin: auto;
+    display: grid;
+    grid-template-columns: 1fr;
+    /* align-items: center; */
+    justify-content: center;
+    width: 88%;
+    gap: 15px;
+    position: relative;
+
+  }
+
+  .option {
+    width: 100%;
+    height: 30px;
+    background-color: white;
+    display: grid;
+    grid-template-columns: 30px 1fr 0;
+    align-items: center;
+    border-radius: 5px;
+    overflow: hidden;
+    font-size: 13px;
+
+
+  }
+
+  .option input {
+    opacity: 0;
+    grid-row: 1;
+    grid-column: 1 / 2;
+  }
+
+  .option .radio {
+    order: -1;
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    grid-row: 1;
+    grid-column: 1 / 2;
+    background-color: black;
+    justify-self: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+  }
+
+  .option .radio::after {
+    content: "";
+    width: 9px;
+    height: 9px;
+    background-color: white;
+    border-radius: 50%;
+    display: none;
+  }
+
+  /* on hover style */
+  .option input:hover~.radio {
+    background-color: silver;
+  }
+
+  .option input:hover~.radio::after {
+    display: block;
+  }
+
+  /* On check style */
+  .option input:checked~.radio {
+    background-color: green;
+  }
+
+  .option input:checked~.radio::after {
+    display: block;
+  }
+
+
+  .option:has(input:checked) {
+    border: 1px solid green;
+    box-shadow: 0.5px 0.5px 3px green;
+  }
+
+  .large:focus-within {
+    position: absolute;
+    top: 0;
+    height: 150px;
+
+  }
+</style>
+</head>
+<body>
+<div id="container" >
+<div class="cloudbx" >
+<div class="cloud" >
+<div class="foam1" ></div>
+<div class="foam2" ></div>
+</div>
+<div class="cloud" >
+<div class="foam1" ></div>
+<div class="foam2" ></div>
+</div>
+<div class="cloud" >
+<div class="foam1" ></div>
+<div class="foam2" ></div>
+</div>
+<div class="cloud" >
+<div class="foam1" ></div>
+<div class="foam2" ></div>
+</div>
+<div class="cloud" >
+<div class="foam1" ></div>
+<div class="foam2" ></div>
+</div>
+</div>
+</div>
+<div class="card-container"></div>
+<!-- Scripts -->
+<script>
+  //Database setup functions
+
+  //database connecting function
+  let dbqs;
+
+  function openDatabase() {
+    return new Promise((res, rej) => {
+      let request = indexedDB.open("QuizzApp", 1);
+      request.onsuccess = evnt => {
+        let db = evnt.target.result;
+        console.log("connection is successfull");
+        res(db);
+      }
+      request.onerror = error => {
+        console.log("Failed to connect", error);
+        rej(error);
+      }
+    });
+  }
+
+  //getting total num of questions
+  function readMeta() {
+    return new Promise((res, rej) => {
+      let transaction = dbqs.transaction("Quizz meta", "readonly");
+      let store = transaction.objectStore("Quizz meta");
+      let readreq = store.get(qzid);
+      readreq.onsuccess = event => {
+        let obj = event.target.result;
+        res(obj);
+      }
+
+      readreq.onerror = event => {
+        console.error(event.target.error);
+        rej();
+
+      }
+    });
+  }
+
+  //read question object from database
+
+  function getQuestion(id) {
+    // console.log("inside getqustn" + id)
+    return new Promise((res, rej) => {
+      // console.log("inside getQuestion func " + dbqs);
+      let transaction = dbqs.transaction("Quizz list", "readonly");
+      let store = transaction.objectStore("Quizz list");
+      let readreq = store.get(id);
+      readreq.onsuccess = event => {
+        let obj = event.target.result;
+        // console.log(Object.keys(obj));
+        console.log(obj);
+        res(obj);
+
+      }
+
+      readreq.onerror = event => {
+        console.log("cant read question");
+        rej();
+      }
+    });
+  }
+
+  //store selected option
+  function saveSelection(id, option) {
+    return new Promise((res, rej) => {
+      let transaction = dbqs.transaction("Quizz list", "readwrite");
+      let store = transaction.objectStore("Quizz list");
+      let readreq = store.get(id);
+      readreq.onsuccess = event => {
+        let obj = event.target.result;
+        obj.selectedOption = option;
+        store.put(obj).onsuccess = () => {
+          res();
+        }
+      }
+      readreq.onerror = event => {
+        console.log("cant read question");
+        rej();
+      }
+
+      transaction.onerror = (event) => {
+        console.log("failed to store selected option due to", event.target.error);
+        rej();
+      }
+    });
+  }
+
+  function clearOption(id) {
+    return new Promise((res, rej) => {
+      let transaction = dbqs.transaction("Quizz list", "readwrite");
+      let store = transaction.objectStore("Quizz list");
+      let readreq = store.get(id);
+      readreq.onsuccess = event => {
+        let obj = event.target.result;
+        obj.selectedOption = "";
+        store.put(obj).onsuccess = () => {
+          res();
+        }
+      }
+      readreq.onerror = event => {
+        console.log("cant clear this, id not matching");
+        rej();
+      }
+
+      transaction.onerror = (event) => {
+        console.log("failed to clear due to", event.target.error);
+        rej();
+      }
+    });
+  }
+
+
+
+
+</script>
+<script type="text/javascript">
+  class Swiper {
+    constructor(elem = document) {
+      this.#element = elem;
+      this.#elementProp = this.#element.getBoundingClientRect();
+
+      //touch events
+      // this.#element.addEventListener("touchstart",this.#startMove);
+      this.#element.addEventListener("mousedown", this.#startMove);
+
+    }
+    //private properties
+    #element = null;
+    #elementProp = null;
+    //Private function.
+    #letsMove = function () { };
+    //touch handling functions.
+    #startMove = (e) => {
+      // this.#element.addEventListener("touchmove",this.#moveWithtouch);
+      this.#element.addEventListener("mousemove", this.#moveWithtouch);
+      // this.#element.addEventListener("touchend",this.#endMove);
+      this.#element.addEventListener("mouseup", this.#endMove);
+      this.doFunc.onstart();
+    }
+
+    #moveWithtouch = (e) => {
+      //console.log("i like to moving moving");
+      this.#elementProp = this.#element.getBoundingClientRect();
+      // let {clientX,clientY}=e.touches[0];
+      let { clientX, clientY } = e;
+      this.touch = { x: clientX, y: clientY };
+      this.#letsMove();
+      this.doFunc.onmove(this.touch);
+
+    }
+
+    #endMove = (e) => {
+
+      this.doFunc.onend();
+      this.#element.removeEventListener("mousemove", this.#moveWithtouch)
+    }
+
+    //public properties
+    doFunc = {
+      onend: function () { },
+      onstart: function () { },
+      onmove: function () { },
+    };
+    //Methods of swiper object
+    //Moves element with touch position.
+    translateWith(Pos, moveType) {
+      let shiftElement = {};
+      switch (Pos) {
+        case 'middle':
+          shiftElement.x = (this.#elementProp.width) / 2;
+          shiftElement.y = (this.#elementProp.height) / 2;
+          break;
+        default:
+          shiftElement.x = 0;
+          shiftElement.y = 0;
+          break;
+        case 'top-right':
+          shiftElement.x = this.#elementProp.width;
+          shiftElement.y = 0;
+          break;
+        case 'bottom-left':
+          shiftElement.x = 0;
+          shiftElement.y = this.#elementProp.height;
+          break;
+        case 'bottom-right':
+          shiftElement.x = this.#elementProp.width;
+          shiftElement.y = this.#elementProp.height;
+          break;
+
+      }
+
+      if (moveType === "translateMove") {
+        let origin = {};
+        origin.x = this.#elementProp.x;
+        origin.y = this.#elementProp.y;
+
+        console.log(origin.x, origin.y)
+        this.#letsMove = () => {
+          //console.log(`Touch x:${this.touch.x}, y:${this.touch.y} | Og  x:${origin.x}, y:${origin.y}`);
+          this.#element.style.transform = `translateX(${this.touch.x - origin.x - shiftElement.x}px) translateY(${this.touch.y - origin.y - shiftElement.y}px)`;
+        }
+
+
+      } else {
+        this.#element.style.position = "absolute";
+        this.#letsMove = () => {
+          this.#element.style.left = `${this.touch.x - shiftElement.x}px`;
+          this.#element.style.top = `${this.touch.y - shiftElement.y}px`;
+        }
+      }
+    }
+
+    stopMove() {
+      this.#letsMove = function () { };
+    }
+
+    stopSwipe() {
+      this.#element.removeEventListener("touchstart", this.#startMove);
+      this.#element.removeEventListener("touchmove", this.#moveWithtouch);
+      this.#element.removeEventListener("touchend", this.#endMove)
+    }
+    get elementProperties() {
+      return this.#elementProp;
+    }
+  }
+</script>
+<script type="text/javascript">
+
+
+
+  class CardStack {
+    constructor(cardStackObj) {
+      this.#container = document.querySelector(cardStackObj.containerclass);
+      this.cardsOndesk = [];
+      this.#initializer(cardStackObj);
+
+    }
+
+    //private properties
+    #container = null;
+    #swipeLeftfunc = this.#nextcard;
+    #swipeRightfunc = this.#previouscard.bind(this, -1);
+    #swipeTopfunc = this.#nextcard;
+    #swipeBottomfunc = this.#nextcard;
+
+    //private methods
+    #initializer(cardStackObj) {
+      try {
+        let className = cardStackObj.containerclass || "card-container";
+        let container = document.querySelector("." + className);
+        container.innerHTML;
+        this.#container = container;
+      } catch (e) {
+        console.error(`Error ${e} Sol:create a div with class name "card-container" or give a valid class name inside object passed with constructor as property containerclass`);
+
+      }
+
+      try {
+        let no = Math.ceil(cardStackObj.noOfcardsOndesk);
+        console.log(no);
+        if (!no) {
+          throw new TypeError("Invalid type for noOfcardsOndesk. Expected a number but received " + typeof no);
+        }
+        this.#createFirstStack(no);
+      } catch (e) {
+        console.error(e);
+      }
+
+      let blank = () => { };
+      this.onmove = cardStackObj.onmove || blank;
+      this.onend = cardStackObj.onend || blank;
+      this.onstart = cardStackObj.onstart || blank;
+
+
+      if (cardStackObj.swipeFunc) {
+        this.setSwiperFunction(cardStackObj.swipeFunc);
+      } else {
+        this.setSwiperFunction({});
+      }
+
+
+      if (cardStackObj.swipeBoarder) {
+        this.setSwipeboarders(cardStackObj.swipeBoarders.top, cardStackObj.swipeBoarders.left, cardStackObj.swipeBoarders.bottom, cardStackObj.swipeBoarders.right);
+      } else {
+        this.setSwipeboarders();
+      }
+
+    }
+    #createFirstStack(noofCards) {
+
+      for (let i = 0; i < noofCards; i++) {
+        this.#addCard();
+      }
+      this.#createSwiper(this.cardsOndesk[0])
+    }
+
+    #createSwiper(element) {
+      let swipecard = new Swiper(element);
+      swipecard.translateWith("middle", "translateMove");
+      this.swipeElement = swipecard;
+
+      this.swipeElement.doFunc.onmove = (touch) => {
+        let elementLiveProperty = this.swipeElement.elementProperties;
+
+
+      }
+
+      this.swipeElement.doFunc.onend = () => {
+        let elementLiveProperty = this.swipeElement.elementProperties;
+        if (elementLiveProperty.left > this.swipeBoarderLeft) {
+          console.log("dead at right");
+          this.#swipeRightfunc(element);
+
+        } else if (elementLiveProperty.right < this.swipeBoarderRight) {
+          console.log("dead at left");
+          this.#swipeLeftfunc(element);
+
+
+
+        } else if (elementLiveProperty.bottom < this.swipeBoarderBottom) {
+          console.log("dead at top");
+          this.#swipeTopfunc(element);
+
+
+        } else if (elementLiveProperty.top > this.swipeBoarderTop) {
+          console.log("dead at bottom");
+          this.#swipeBottomfunc(element);
+
+
+        } else {
+          console.log("safe");
+          element.style.transform = "";
+        }
+
+      }
+    }
+
+
+
+
+    #nextcard(element) {
+
+      element.style.transform = `translate3d(0px,0px,-15px) scale(0.8) rotate(16deg)`;
+      element.classList.add("next");
+      this.swipeElement.stopMove();
+      setTimeout(() => {
+        this.#container.removeChild(element);
+      }, 300);
+      this.#addCard();
+      this.cardsOndesk.shift();
+      this.#createSwiper(this.cardsOndesk[0]);
+      this.funcWithNxt();
+
+    }
+
+    #previouscard(leftOrRight, element) {
+      element.style.transform = '';
+      this.swipeElement.stopSwipe();
+      this.#container.removeChild(this.cardsOndesk[this.cardsOndesk.length - 1]);
+      this.cardsOndesk.pop();
+      let parent = this.#container;
+      let card = document.createElement('div');
+      card.classList.add("previous");
+      card.style.setProperty("--i", leftOrRight);
+      card.classList.add("card");
+      parent.append(card);
+      card.innerHTML = "previous card";
+      this.cardsOndesk.unshift(card);
+      this.#createSwiper(this.cardsOndesk[0]);
+      this.funcWithPrev();
+
+    }
+
+    #addCard() {
+      let parent = this.#container;
+      let card = document.createElement('div');
+      card.classList.add("card");
+      parent.prepend(card);
+      this.cardsOndesk.push(card);
+
+    }
+
+
+    //public properties and methods
+    funcWithNxt = () => { }
+    funcWithPrev = () => { }
+
+    setSwipeboarders(top, left, bottom, right) {
+
+      //Error Handling
+      if (top) {
+        if (!(typeof (top) === "number")) {
+          throw new Error("Border Top value should be a number value given is a " + typeof (top));
+        }
+      }
+
+      if (left) {
+        if (!(typeof (left) === "number")) {
+          throw new Error("Border Left value should be a number value given is a " + typeof (left));
+        }
+      }
+
+      if (bottom) {
+        if (!(typeof (bottom) === "number")) {
+          throw new Error("Border Bottom value should be a number value given is a " + typeof (bottom));
+        }
+      }
+
+      if (right) {
+        if (!(typeof (right) === "number")) {
+          throw new Error("Border Top value should be a number value given is a " + typeof (right));
+        }
+      }
+      //setting values
+      let elementProps = this.swipeElement.elementProperties;
+      this.swipeBoarderLeft = left || (elementProps.left + elementProps.right) / 2;
+      this.swipeBoarderRight = right || (elementProps.left + elementProps.right) / 2;
+      this.swipeBoarderTop = top || (elementProps.top + elementProps.bottom) / 2;
+      this.swipeBoarderBottom = bottom || (elementProps.top + elementProps.bottom) / 2;
+
+      console.log(this.swipeBoarderLeft)
+      console.log(this.swipeBoarderRight)
+      console.log(this.swipeBoarderTop)
+      console.log(this.swipeBoarderBottom)
+    }
+
+    setSwiperFunction(swipeActn) {
+
+
+      switch (swipeActn.left) {
+        case ("previous"):
+          this.#swipeLeftfunc = this.#previouscard.bind(this, 1);
+          break;
+        case ("next"):
+          this.#swipeLeftfunc = this.#nextcard;
+          break;
+        default:
+          this.#swipeLeftfunc = this.#nextcard;
+          break;
+
+      }
+
+      switch (swipeActn.right) {
+        case ("previous"):
+          this.#swipeRightfunc = this.#previouscard.bind(this, -1);
+          break;
+        case ("next"):
+          this.#swipeRightfunc = this.#nextcard;
+          break;
+        default:
+          this.#swipeRightfunc = this.#nextcard;
+          break;
+
+      }
+
+      switch (swipeActn.top) {
+        case ("previous"):
+          this.#swipeTopfunc = this.#previouscard.bind(this, 1);
+          break;
+        case ("next"):
+          this.#swipeTopfunc = this.#nextcard;
+          break;
+        default:
+          this.#swipeTopfunc = this.#nextcard;
+          break;
+
+      }
+
+      switch (swipeActn.bottom) {
+        case ("previous"):
+          this.#swipeBottomfunc = this.#previouscard.bind(this, -1);
+          break;
+        case ("next"):
+          this.#swipeBottomfunc = this.#nextcard;
+          break;
+        default:
+          this.#swipeBottomfunc = this.#nextcard;
+          break;
+
+      }
+    }
+
+    swipeNext() {
+      this.#nextcard(this.cardsOndesk[0]);
+    }
+
+    swipePrev(pos = -1) {
+      this.#previouscard(pos, this.cardsOndesk[0]);
+    }
+  }
+</script>
+<script type="text/javascript">
+
+  //Main Script
+
+  let prevIndex, nextIndex = -1;
+  let totalQuestions;
+  let qzid;
+
+  // creating cardstack
+  const cardStack = new CardStack({
+    containerclass: "card-container",
+    noOfcardsOndesk: 3
+  });
+
+  // previous button
+
+  window.onload = async () => {
+    qzid = await localStorage.getItem("selectedValue");
+    dbqs = await openDatabase();
+    console.log("line 2");
+    //console.log(totalQuestions);
+    let metaData = await readMeta();
+    console.log(metaData);
+    totalQuestions = metaData.numOfQstns;
+    console.log(totalQuestions);
+    console.log(qzid);
+
+    //clear all options selected if some one have previously attend this.
+    for (let i = 0; i < totalQuestions; i++) {
+      await clearOption(qzid + i);
+
+    }
+
+
+    cardStack.cardsOndesk[0].innerHTML = await createComponent(nextIndexchange());
+    cardStack.cardsOndesk[1].innerHTML = await createComponent(nextIndexchange());
+
+
+  }
+
+  let createComponent = async (qid = 0) => {
+    const currentQzid = qzid + qid;
+    const currentQuestion = await getQuestion(currentQzid);
+    let component = `
+          <div class="qcard">
+          <div class="question">
+              ${currentQuestion.question}
+          </div>
+          <div class="options">`;
+
+    currentQuestion.options.forEach(x => {
+      component += `<label class="option ${(x.length > 30) ? "large" : ""}">${x}
+                  <input type="radio" name="option">
+                  <span class="radio"></span>
+              </label>`
+    })
+
+    component += `
+          </div>
+      </div>`;
+
+    return component;
+  }
+
+  //call when next card shows
+  cardStack.funcWithNxt = async () => {
+  
+    cardStack.cardsOndesk[1].innerHTML = await createComponent(nextIndexchange());
+
+
+  }
+  //call with when previous shows 
+  cardStack.funcWithPrev =async () => {
+    cardStack.cardsOndesk[0].innerHTML = await createComponent(prevIndexchange());
+   
+    
+  }
+
+  //function to show previous ca
+  function prev() {
+    console.log("Prev card");
+    cardStack.swipePrev();
+  }
+
+ function nextIndexchange(){
+     prevIndex = nextIndex;
+     nextIndex = (nextIndex + 1) % totalQuestions;
+     return nextIndex;
+ }
+
+ function prevIndexchange(){
+    nextIndex = prevIndex;
+    prevIndex = (prevIndex - 1 + totalQuestions) % totalQuestions;
+    return prevIndex;
+ }
+</script>
+</body>
+</html>
