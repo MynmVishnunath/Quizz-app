@@ -137,7 +137,8 @@
       grid-template-rows: 160px 1fr;
       width: 100%;
       height: 100%;
-      background-color: rgba(255, 99, 71, 0.886);
+      background-color: #a3d9a5
+      ;
       /* background-color: #ececec; */
       border-radius: 5px;
 
@@ -246,6 +247,7 @@
 
     }
   </style>
+
 </head>
 
 <body>
@@ -259,6 +261,7 @@
 
     //database connecting function
     let dbqs;
+
     function openDatabase() {
       return new Promise((res, rej) => {
         let request = indexedDB.open("QuizzApp", 1);
@@ -282,9 +285,7 @@
         let readreq = store.get(qzid);
         readreq.onsuccess = event => {
           let obj = event.target.result;
-          totalQuestions = obj.numOfQstns;
-        
-          res();
+          res(obj);
         }
 
         readreq.onerror = event => {
@@ -751,21 +752,30 @@
 
 
   <script type="text/javascript">
+
     //Main Script
-    let index = 0;
+
+    let prevIndex, nextIndex = -1;
     let totalQuestions;
     let qzid;
 
+    // creating cardstack
     const cardStack = new CardStack({
       containerclass: "card-container",
-      noOfcardsOndesk: 5
+      noOfcardsOndesk: 3
     });
 
+    // previous button
+  
     window.onload = async () => {
       qzid = await localStorage.getItem("selectedValue");
       dbqs = await openDatabase();
       console.log("line 2");
-      await readMeta();
+      //console.log(totalQuestions);
+      let metaData = await readMeta();
+      console.log(metaData);
+      totalQuestions = metaData.numOfQstns;
+      console.log(totalQuestions);
       console.log(qzid);
 
       //clear all options selected if some one have previously attend this.
@@ -774,11 +784,11 @@
 
       }
 
-    
-    cardStack.cardsOndesk[0].innerHTML = await createComponent(index);
-    cardStack.cardsOndesk[1].innerHTML = await createComponent(++index);
 
-      
+      cardStack.cardsOndesk[0].innerHTML = await createComponent(nextIndexchange());
+      cardStack.cardsOndesk[1].innerHTML = await createComponent(nextIndexchange());
+
+
     }
 
     let createComponent = async (qid = 0) => {
@@ -802,64 +812,40 @@
             </div>
         </div>`;
 
-        return component;
+      return component;
     }
 
-    const questionBank = [
-      {
-        question: "Ponman movie director",
-        options: ["jeethu joseph", "jothis shankar", "jithu madhavan"],
-
-      },
-
-      {
-        question: "2024 Oscar for Best movie won by",
-        options: ["Anhora", "parasite", "flow", "Dune 2", "caddo lake"],
-
-      },
-      {
-        question: "2024 Oscar for best animation movie won by",
-        options: ["flow", "wild robot", "transformer one", "kung fu panda 4"],
-      },
-      {
-        question: "2024 Oscar for best make up won by ",
-        options: ["Submission", "Anhora", "Dune 2", "The substance"]
-      },
-      {
-        question: "what award got to movie conclave at the 97th academy award",
-        options: ["Best direction", "Best screen play", " Best costume", "Best Original Score"]
-
-      },
-      {
-        question: "Best  Documentary feature filim 97th academy award",
-        options: [" i'm still here", "No other land", "Soundtrack to a Coup d'État", "Black box diaries"]
-
-      },
-      {
-
-        question: "Best actor in 97th academy award",
-        options: ["mikey madison", "zoe saldana", 'scarlet johanson', "zendaya"],
-      }
-    ]
-
-
- 
-
+    //call when next card shows
     cardStack.funcWithNxt = async () => {
-      index++;
-      cardStack.cardsOndesk[1].innerHTML = await createComponent(index);
+    
+      cardStack.cardsOndesk[1].innerHTML = await createComponent(nextIndexchange());
 
 
     }
-    cardStack.funcWithPrev = () => {
-      cardStack.cardsOndesk[0].innerHTML = "Uno Reverse";
-      cardStack.cardsOndesk[2].innerHTML = "";
+    //call with when previous shows 
+    cardStack.funcWithPrev =async () => {
+      cardStack.cardsOndesk[0].innerHTML = await createComponent(prevIndexchange());
+     
+      
     }
 
+    //function to show previous ca
     function prev() {
       console.log("Prev card");
       cardStack.swipePrev();
     }
+
+   function nextIndexchange(){
+       prevIndex = nextIndex;
+       nextIndex = (nextIndex + 1) % totalQuestions;
+       return nextIndex;
+   }
+
+   function prevIndexchange(){
+      nextIndex = prevIndex;
+      prevIndex = (prevIndex - 1 + totalQuestions) % totalQuestions;
+      return prevIndex;
+   }
   </script>
 </body>
 
