@@ -1,0 +1,124 @@
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+
+
+  body {
+    position: relative;
+    width: 100%;
+    height: 100dvh;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+
+  }
+
+  .card-container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: grid;
+    justify-items: center;
+    align-items: center;
+    overflow: hidden;
+
+
+  }
+
+  .card {
+    display: grid;
+    width: 250px;
+    height: 400px;
+    background:#8ec0e4;
+    position: absolute;
+    border: 1px solid black;
+    border-radius: 5px;
+
+
+
+  }
+
+  .card::after {
+    content: "";
+    background-color: rgb(254, 252, 252);
+    border-radius: 3px;
+    position: absolute;
+    width: 95%;
+    height: 150px;
+    top: 5px;
+    right: 5px;
+    z-index: -1;
+  }
+
+  .card:nth-last-child(1) {
+    transform: translate3d(0px, 0px, 0px) rotate(0deg);
+
+    /*background:orange;*/
+
+  }
+
+  .card:nth-last-child(2) {
+
+    transform: translate3d(4px, 4px, 0px) rotate(4deg);
+    transition: all 0.5s;
+  }
+
+  .card:nth-last-child(3) {
+    transform: translate3d(8px, 8px, 0px) rotate(8deg);
+    transition: all 0.5s;
+
+  }
+
+  .card:nth-last-child(4) {
+    transform: translate3d(12px, 12px, 0px) rotate(12deg);
+    transition: all 0.5s;
+
+  }
+
+  .card:nth-last-child(5) {
+    transform: translate3d(16px, 16px, 0px) rotate(16deg);
+    transition: all 0.5s;
+  }
+
+  .next {
+    background: red;
+    z-index: -1;
+    opacity: 0.1;
+    transition: all 0.5s;
+
+
+
+
+  }
+
+  .previous {
+    animation: previouscall 0.5s linear backwards;
+  }
+
+  @keyframes previouscall {
+    0% {
+      z-index: -1;
+      opacity: 0.5;
+      transform: translate3d(0px, 0px, 0px) scale(0.5) rotate(16deg);
+
+    }
+
+    50% {
+
+      z-index: -1;
+      opacity: 0.8;
+      transform: translate3d(calc(var(--i)*150px), 0px, 0px) scale(0.8) rotate(12deg);
+    }
+
+    100% {
+      z-index: 0;
+      opacity: 1;
+      transform: translate3d(0px, 0px, 0px) scale(1) rotate(0);
+    }
+
+  }
