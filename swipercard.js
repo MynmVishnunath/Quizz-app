@@ -124,6 +124,21 @@
 
     }
 
+    #nextWithanim(leftOrRight,element){
+      element.classList.remove("previous");
+      element.classList.add("nextWithanim");
+      element.style.setProperty("--i", leftOrRight);
+      // element.classList.add("next");
+      this.swipeElement.stopMove();
+      setTimeout(() => {
+        this.#container.removeChild(element);
+      }, 700);
+      this.#addCard();
+      this.cardsOndesk.shift();
+      this.#createSwiper(this.cardsOndesk[0]);
+      this.funcWithNxt();
+    }
+
     #previouscard(leftOrRight, element) {
       element.style.transform = '';
       this.swipeElement.stopSwipe();
@@ -189,10 +204,6 @@
       this.swipeBoarderTop = top || (elementProps.top + elementProps.bottom) / 2;
       this.swipeBoarderBottom = bottom || (elementProps.top + elementProps.bottom) / 2;
 
-      console.log(this.swipeBoarderLeft)
-      console.log(this.swipeBoarderRight)
-      console.log(this.swipeBoarderTop)
-      console.log(this.swipeBoarderBottom)
     }
 
     setSwiperFunction(swipeActn) {
@@ -252,7 +263,8 @@
     }
 
     swipeNext() {
-      this.#nextcard(this.cardsOndesk[0]);
+      // this.cardsOndesk[0].classList.add("nextWithanim");
+      this.#nextWithanim(1,this.cardsOndesk[0]);
     }
 
     swipePrev(pos = -1) {
