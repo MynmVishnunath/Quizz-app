@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <svg class="svg" width="150" height="150" viewBox="0 0 150 150" style="border: 1px solid black;">
+          
+    </svg>
+    <script>
+        const svg = document.querySelector(".svg");
+        // svg.innerHTML = `<circle cx="75" cy="75" r="2"/>`;
+
+        function drawCoords() {
+            const cx = 75;
+            const cy = 75;
+            const r = 55;
+            const segments = 10;
+            const unitAngle = Math.PI * 2 / segments;
+            const cpDist = r * 4 / 3 * Math.tan(Math.PI / (2 * segments));
+            console.log(cpDist);
+
+            for (let i=0;i<segments;i++) {
+                //Angles (mesured in radiant)
+                const angle1 = i  * unitAngle; 
+                const angle2 = (i + 1) * unitAngle;
+                //Anchor points
+                const ap1 = {
+                    x:Math.cos(angle1) * r + cx,
+                    y:Math.sin(angle1) * r + cy
+
+                };
+                const ap2 = {
+                    x:Math.cos(angle2) * r + cx,
+                    y:Math.sin(angle2) * r + cy
+
+                }
+
+                //control points 
+
+                const cp1 = {
+                    x:ap1.x-Math.sin(angle1) * cpDist,
+                    y:ap1.y + Math.cos(angle1) * cpDist
+                }
+
+                const cp2 = {
+                    x:ap2.x + Math.sin(angle2) * cpDist,
+                    y:ap2.y - Math.cos(angle2) * cpDist
+                }
+              
+                const color = "black";
+
+                
+                
+                svg.innerHTML += `<path d="M${ap1.x} ${ap1.y} C${cp1.x} ${cp1.y} ${cp2.x} ${cp2.y} ${ap2.x}  ${ap2.y} " stroke="${color}" stroke-width="5" fill="none"/>`;
+                
+                svg.innerHTML += `<circle cx="${ap1.x}" cy="${ap1.y}" r="0.5"/><line x1="75" y1="75" x2="${ap1.x}" y2="${ap1.y}"  stroke="black"/>`
+
+            }
+
+        }
+
+
+
+
+        drawCoords();
+    </script>
+</body>
+
+</html>
