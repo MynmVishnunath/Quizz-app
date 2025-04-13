@@ -11,6 +11,7 @@
   const prevbtn=document.querySelector(".prev-btn");
   const nextbtn=document.querySelector(".next-btn");
   const submitbtn=document.querySelector(".sub-btn");
+  const largeOpt = document.querySelector(".large");
 
   //page functions
 
@@ -27,12 +28,16 @@
     console.log("answer submitted");
   }
 
-  const saveOption =async (qzid,e)=>{
-    const allOptions = document.querySelectorAll(`input[name = option]`);
-    allOptions.forEach(x =>{
-      x.classList.remove("checked");
-    });
-    const selectedOption = document.querySelector(`input[name = "option"]:checked`);
+
+
+  const saveOption =async (qzid,parent,e)=>{
+    //because of same name for all options of all card in the same document, check attribute of radio input doesnt work as expect 
+    //so as an alternative approach i give class name to checked radio inputs
+
+    //remove class from radio button wich is previously selected
+    const selected_opt_prev = parent.querySelector(`.checked`);
+    selected_opt_prev && selected_opt_prev.classList.remove("checked");
+    const selectedOption = parent.querySelector(`input[name = "option"]:checked`);
     selectedOption.classList.add("checked");
     await saveSelection(qzid,selectedOption.value); 
 
@@ -40,7 +45,7 @@
 
    function eventListnerforOptitons(parentCard,qzid){
       let Options = parentCard.querySelector(".options");
-      let optionEven = saveOption.bind(undefined,qzid);
+      let optionEven = saveOption.bind(undefined,qzid,parentCard);
       Options.addEventListener("change", optionEven);
   
   }
@@ -63,6 +68,7 @@ function prevIndexchange(){
   //quiz ui creating function
   let createComponent = async (qid = 0) => {
     const currentQzid = qzid + qid;
+    console.log(currentQzid);
     const currentQuestion = await getQuestion(currentQzid);
     let component =  `
           <div class="qcard">
@@ -73,7 +79,7 @@ function prevIndexchange(){
 
     currentQuestion.options.forEach(x => {
       component += `<label class="option ${(x.length > 30) ? "large" : ""}">${x}
-                  <input type="radio" name="option" value="${x}" class=" ${'sorry'/*(currentQuestion.selectedOption===x)?"checked":""*/}">
+                  <input type="radio" name="option" value="${x}" class=" ${(currentQuestion.selectedOption===x)?"checked":""}" ${(currentQuestion.selectedOption===x)?"":""}>
                   <span class="radio"></span>
               </label>`
     })
@@ -100,6 +106,7 @@ function prevIndexchange(){
   prevbtn.addEventListener("click",prev);
   nextbtn.addEventListener("click",next);
   submitbtn.addEventListener("click",submit);
+  largeOpt.addEventListener("dbl-click",large_Dbl_Clck);
 
   // creating cardstack
   const cardStack = new CardStack({
@@ -128,10 +135,12 @@ function prevIndexchange(){
 
     //Load first two questions to first two card.
     (async function firstLoad(){
-    const componentObj =  await createComponent(nextIndexchange());
+    let componentObj =  await createComponent(nextIndexchange());
     cardStack.cardsOndesk[0].innerHTML =componentObj.component;
     eventListnerforOptitons(cardStack.cardsOndesk[0],componentObj.currentQzid);
-    cardStack.cardsOndesk[1].innerHTML = (await createComponent(nextIndexchange())).component;
+    componentObj = (await createComponent(nextIndexchange()));
+    cardStack.cardsOndesk[1].innerHTML = componentObj.component;
+    eventListnerforOptitons(cardStack.cardsOndesk[1],componentObj.currentQzid);
     })();
 
 
@@ -143,7 +152,8 @@ function prevIndexchange(){
     const index = nextIndexchange();
     const componentObj =  await createComponent(index);
     cardStack.cardsOndesk[1].innerHTML = componentObj.component;
-    eventListnerforOptitons(cardStack.cardsOndesk[0],componentObj.currentQzid);
+    eventListnerforOptitons(cardStack.cardsOndesk[1],componentObj.currentQzid);
+    console.log(componentObj.currentQzid);
     enableSubmit(index);
   }
   //call with when previous shows 
@@ -151,6 +161,8 @@ function prevIndexchange(){
     const componentObj = await createComponent(prevIndexchange());
     cardStack.cardsOndesk[0].innerHTML = componentObj.component;
     eventListnerforOptitons(cardStack.cardsOndesk[0],componentObj.currentQzid);
+    console.log(componentObj.currentQzid);
+
 
   }
 

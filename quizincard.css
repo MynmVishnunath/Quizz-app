@@ -83,7 +83,7 @@
   }
 
   /* on hover style */
-  .option input:hover~.radio {
+  .option input:hover:not(.checked)~.radio {
     background-color: silver;
   }
 
