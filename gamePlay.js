@@ -27,14 +27,21 @@
     console.log("answer submitted");
   }
 
-  const optionEvent = ()=>{
+  const saveOption =async (qzid,e)=>{
+    const allOptions = document.querySelectorAll(`input[name = option]`);
+    allOptions.forEach(x =>{
+      x.classList.remove("checked");
+    });
     const selectedOption = document.querySelector(`input[name = "option"]:checked`);
-    console.log(selectedOption.value);
+    selectedOption.classList.add("checked");
+    await saveSelection(qzid,selectedOption.value); 
+
   }
 
-   function eventListnerforOptitons(parentCard){
+   function eventListnerforOptitons(parentCard,qzid){
       let Options = parentCard.querySelector(".options");
-      Options.addEventListener("change", optionEvent);
+      let optionEven = saveOption.bind(undefined,qzid);
+      Options.addEventListener("change", optionEven);
   
   }
 
@@ -66,7 +73,7 @@ function prevIndexchange(){
 
     currentQuestion.options.forEach(x => {
       component += `<label class="option ${(x.length > 30) ? "large" : ""}">${x}
-                  <input type="radio" name="option" value="${x}">
+                  <input type="radio" name="option" value="${x}" class=" ${'sorry'/*(currentQuestion.selectedOption===x)?"checked":""*/}">
                   <span class="radio"></span>
               </label>`
     })
@@ -75,7 +82,7 @@ function prevIndexchange(){
           </div>
       </div>`;
     
-    return component;
+    return {component,currentQzid};
   }
 
   // submit enabling function
@@ -120,8 +127,12 @@ function prevIndexchange(){
     }
 
     //Load first two questions to first two card.
-    cardStack.cardsOndesk[0].innerHTML = await createComponent(nextIndexchange());
-    cardStack.cardsOndesk[1].innerHTML = await createComponent(nextIndexchange());
+    (async function firstLoad(){
+    const componentObj =  await createComponent(nextIndexchange());
+    cardStack.cardsOndesk[0].innerHTML =componentObj.component;
+    eventListnerforOptitons(cardStack.cardsOndesk[0],componentObj.currentQzid);
+    cardStack.cardsOndesk[1].innerHTML = (await createComponent(nextIndexchange())).component;
+    })();
 
 
   }
@@ -130,14 +141,16 @@ function prevIndexchange(){
   //call when next card shows
   cardStack.funcWithNxt = async () => {
     const index = nextIndexchange();
-    cardStack.cardsOndesk[1].innerHTML = await createComponent(index);
-    eventListnerforOptitons(cardStack.cardsOndesk[0]);
+    const componentObj =  await createComponent(index);
+    cardStack.cardsOndesk[1].innerHTML = componentObj.component;
+    eventListnerforOptitons(cardStack.cardsOndesk[0],componentObj.currentQzid);
     enableSubmit(index);
   }
   //call with when previous shows 
   cardStack.funcWithPrev =async () => {
-    cardStack.cardsOndesk[0].innerHTML = await createComponent(prevIndexchange());
-    eventListnerforOptitons(cardStack.cardsOndesk[0]);
+    const componentObj = await createComponent(prevIndexchange());
+    cardStack.cardsOndesk[0].innerHTML = componentObj.component;
+    eventListnerforOptitons(cardStack.cardsOndesk[0],componentObj.currentQzid);
 
   }
 

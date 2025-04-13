@@ -92,16 +92,17 @@
   }
 
   /* On check style */
-  .option input:checked~.radio {
+  
+  .option .checked~.radio, .option input:checked~.radio {
     background-color: green;
   }
 
-  .option input:checked~.radio::after {
+  .option .checked~.radio::after {
     display: block;
   }
 
 
-  .option:has(input:checked) {
+  .option:has(.checked) {
     border: 1px solid green;
     box-shadow: 0.5px 0.5px 3px green;
   }
