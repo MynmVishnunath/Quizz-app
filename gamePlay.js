@@ -35,12 +35,23 @@ const saveOption = async (qzid, parent, e) => {
   //because of same name for all options of all card in the same document, check attribute of radio input doesnt work as expect 
   //so as an alternative approach i give class name to checked radio inputs
 
+  const selectedOption = parent.querySelector(`input[name = "option"]:checked`);
+  let checked = selectedOption.classList.contains("checked");
+
   //remove class from radio button wich is previously selected
   const selected_opt_prev = parent.querySelector(`.checked`);
   selected_opt_prev && selected_opt_prev.classList.remove("checked");
-  const selectedOption = parent.querySelector(`input[name = "option"]:checked`);
-  selectedOption.classList.add("checked");
-  await saveSelection(qzid, selectedOption.value);
+
+  //remove cheked if option is already selected otherwise add checked
+  console.log(checked);
+  if(!checked){
+    console.log("pure")
+    selectedOption.classList.add("checked");
+    await saveSelection(qzid, selectedOption.value);
+}else{
+    console.log("deselect");
+    await saveSelection(qzid, "");
+  }
 
 }
 
