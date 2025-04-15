@@ -140,12 +140,12 @@
 
       z-index: 0;
       opacity: 0.9;
-      transform: translate3d(calc(var(--i)*150px), 0px, 0px) scale(0.8) rotate(12deg);
+      transform: translate3d(calc(var(--i)*150px), 0px, 0px) scale(0.9) rotate(12deg);
     }
 
     100% {
       z-index: -5;
       opacity: 0;
-      transform: translate3d(0px, 0px, 0px) scale(0.5) rotate(16deg);
+      transform: translate3d(0px, 0px, 0px) scale(0.8) rotate(16deg);
     }
   }

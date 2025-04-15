@@ -107,9 +107,17 @@
     box-shadow: 0.5px 0.5px 3px green;
   }
 
-  .large:focus-within {
+
+  .large:focus {
+  display: block;
+
+  }
+
+  .large.readmore{
     position: absolute;
     top: 0;
     height: 150px;
-
   }
+  
+
+  
