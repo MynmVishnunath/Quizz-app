@@ -8,6 +8,8 @@
     <link rel="stylesheet" href="gamePlay.css">
     <link rel="stylesheet" href="swipercard.css">
     <link rel="stylesheet" href="quizincard.css">
+    <link rel="stylesheet" href="dialog.css">
+
 </head>
 
 <body>
@@ -37,7 +39,7 @@
     </div>
     <div class="card-container"></div>
     <div class="btn-holder">
-        <button class="btn sub-btn" disabled>
+        <button class="btn sub-btn" disa>
             <img src="check-solid.svg" alt="">
         </button>
         <button class="btn next-btn">
@@ -47,10 +49,38 @@
             <img src="previous.svg" alt="">
         </button>
     </div>
+    <dialog class="dlogBox">
+        <div class="container1">
+            <div class="dot1"></div>
+            <div class="dot1"></div>
+            <div class="dot1"></div>
+        </div>
+        <div class="piechart">
+            <svg class="svg" width="200" height="200" viewBox="0 0 150 150">
+
+            </svg>
+            <div class="value">
+                <div class="head">Score :</div>
+                <div class="score" id="myScore">78/100</div>
+            </div>
+        </div>
+        <div class="right">Right Answer : 5</div>
+        <div class="wrong">Wrong Answer : 3</div>
+        <div class="unattempt">Unattemted : 2</div>
+        <div class="home">
+            Go to home
+            <img src="home.svg" alt="">
+        </div>
+        <div class="review">
+            Review
+            <img src="repeat.svg" alt="">
+        </div>
+    </dialog>
     <!-- Scripts -->
     <script src="indexDB.js"></script>
     <script src="swiper.js"></script>
     <script src="swipercard.js"></script>
+    <script src="score.js"></script>
     <script src="gamePlay.js"></script>
 
 </body>

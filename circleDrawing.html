@@ -9,6 +9,10 @@
 
 <body>
     <svg class="svg" width="150" height="150" viewBox="0 0 150 150" style="border: 1px solid black;">
+        <defs>
+            <path id="shape" d="M75 130 H150" fill="none" stroke-width="2"></path>
+        </defs>
+        <textpath xlink:href="#shape">vishnunath c v</textpath>
           
     </svg>
     <script>
@@ -58,7 +62,6 @@
                 
                 svg.innerHTML += `<path d="M${ap1.x} ${ap1.y} C${cp1.x} ${cp1.y} ${cp2.x} ${cp2.y} ${ap2.x}  ${ap2.y} " stroke="${color}" stroke-width="5" fill="none"/>`;
                 
-                svg.innerHTML += `<circle cx="${ap1.x}" cy="${ap1.y}" r="0.5"/><line x1="75" y1="75" x2="${ap1.x}" y2="${ap1.y}"  stroke="black"/>`
 
             }
 

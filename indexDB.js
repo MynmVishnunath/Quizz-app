@@ -1,8 +1,8 @@
-
+'use strict'
   //Database setup functions
 
   //database connecting function
-  let dbqs;
+  let dbqs,qzid;
 
   function openDatabase() {
     return new Promise((res, rej) => {
@@ -21,6 +21,7 @@
 
   //getting total num of questions
   function readMeta() {
+    'use strict'
     return new Promise((res, rej) => {
       let transaction = dbqs.transaction("Quizz meta", "readonly");
       let store = transaction.objectStore("Quizz meta");
@@ -50,7 +51,6 @@
       readreq.onsuccess = event => {
         let obj = event.target.result;
         // console.log(Object.keys(obj));
-        console.log(obj);
         res(obj);
 
       }

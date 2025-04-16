@@ -1,0 +1,179 @@
+:root {
+    --dur: 1s;
+    --dely1: calc(0.33s + var(--dur) - 1s);
+    --dely2: calc(0.66s + var(--dur) - 1s)
+}
+
+.dlogBox::backdrop {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0, 0, 0, 0.354);
+    width: 100%;
+    height: 100%;
+}
+
+.dlogBox {
+    width: 350px;
+    height: 450px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    transition: all 2s;
+    border-radius: 15px;
+    border: none;
+
+}
+
+.dlogBox[open] {
+    scale: 1;
+    opacity: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+svg {
+    transform: rotate(270deg);
+}
+
+svg text {
+    transform: rotate(20deg);
+
+}
+
+.piechart {
+    position: relative;
+}
+
+.value {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: none;
+    top: 0;
+    left: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    .score {
+        font-size: 30px;
+        font-weight: bold;
+        margin-top: -5px;
+        padding: 0;
+    }
+
+}
+
+.right {
+    color: green;
+}
+
+.wrong {
+    color: red;
+}
+
+.unattempt {
+    color: rgb(122, 121, 121);
+}
+
+.home {
+    color: white;
+    width: 150px;
+    height: 30px;
+    border-radius: 50px;
+    background: linear-gradient(90deg, green -10%, khaki);
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    margin-top: 10px;
+
+    img {
+        object-fit: contain;
+        width: 25px;
+        height: 25px;
+    }
+}
+
+.review {
+    color: white;
+    width: 150px;
+    height: 30px;
+    border-radius: 50px;
+    background: linear-gradient(90deg, rgb(130, 1, 145) -10%, rgb(187, 140, 240));
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    margin-top: 10px;
+
+    img {
+        object-fit: contain;
+        width: 25px;
+        height: 25px;
+    }
+}
+
+
+/* Load animation related style */
+.container1 {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background: linear-gradient(141deg, green -10%, khaki);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    z-index: 200;
+    transition: 2s;
+
+}
+
+.dot1 {
+    background: white;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    animation: wave var(--dur) linear infinite;
+}
+
+.dot1:nth-child(2) {
+    animation-delay: var(--dely1);
+}
+
+.dot1:nth-child(3) {
+    animation-delay: var(--dely2);
+}
+
+@keyframes wave {
+    0% {
+        transform: translate(0, 0);
+    }
+
+    50% {
+        transform: translate(0, -18px);
+        background: rgb(100, 25, 0);
+    }
+
+    100% {
+        transform: translate(0, 0);
+    }
+
+}
+
+@keyframes wave2 {
+    0% {
+        transform: scale(0);
+    }
+
+    100% {
+        transform: scale(2);
+    }
+
+}

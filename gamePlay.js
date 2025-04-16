@@ -1,12 +1,11 @@
-
+'use strict'
 //Main Script
 
 //Global variables
 
 let prevIndex, nextIndex = -1;
 let totalQuestions;
-let qzid;
-let dbl_clicked;
+// let qzid;
 
 //select elemnts
 const prevbtn = document.querySelector(".prev-btn");
@@ -27,6 +26,7 @@ function next() {
 
 function submit() {
   console.log("answer submitted");
+  calculateScore();
 }
 
 
@@ -43,13 +43,12 @@ const saveOption = async (qzid, parent, e) => {
   selected_opt_prev && selected_opt_prev.classList.remove("checked");
 
   //remove cheked if option is already selected otherwise add checked
-  console.log(checked);
-  if(!checked){
-    console.log("pure")
+  if (!checked) {
+    //select
     selectedOption.classList.add("checked");
     await saveSelection(qzid, selectedOption.value);
-}else{
-    console.log("deselect");
+  } else {
+    // Deselect
     await saveSelection(qzid, "");
   }
 
@@ -74,24 +73,24 @@ function eventListnerforOptitons(parentCard, qzid) {
   //prevent checking radio while  clicking and select option when click twice
   radio.forEach(x => {
     x.addEventListener("click", (e) => {
-      clickCount = (clickCount == 2) ? 2 : ++clickCount ;
-      if(flag){
-      setTimeout(()=>{
-        if(clickCount==2){
-        optionEven(e);
-        console.log("clicked twice");
-        // clickCount = 0;
-      }else{
-        console.log("clicked")
-       
+      clickCount = (clickCount == 2) ? 2 : ++clickCount;
+      if (flag) {
+        setTimeout(() => {
+          if (clickCount == 2) {
+            optionEven(e);
+            console.log("clicked twice");
+            // clickCount = 0;
+          } else {
+            console.log("clicked")
+
+          }
+          console.log(clickCount);
+          clickCount = 0;
+          flag = !flag;
+        }, 300);
+        flag = !flag;
       }
-      console.log(clickCount);
-      clickCount = 0;
-      flag=!flag;
-      },300);
-      flag = !flag;
-    }
-    
+
     });
     // x.addEventListener("dblclick", optionEven);
   });
