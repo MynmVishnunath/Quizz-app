@@ -157,12 +157,71 @@ nav {
     border-radius: 5px;
     text-align: center;
     color: white;
-    font-family: serif;
-    font-size: 60px;
     padding-top: 10px;
     box-shadow: 1px 1px 2px black;
+    font-family: serif;
+
+    .no-of-qstns{
+        font-size: 60px;
+    }
+
+    .qzid{
+        display: none;
+    }
 
 }
+
+.daycontnr.dtailed .cardstyle{
+    width: 80%;
+    height: 100px;
+    text-align: left;
+    flex-grow: 0;
+    gap: 0;
+    display: grid;
+    padding-left: 10px;
+    
+    *{
+        margin: 0;
+    }
+    .no-of-qstns{
+      
+        font-size: 12px;
+        grid-row-start:2 ;
+        color: rgb(194, 237, 194);
+    }
+
+    .no-of-qstns::before{
+        content: 'Number of Questions : ';
+        font-weight: bold;
+    }
+   
+    .daystyle{
+        font-size: 20px;
+        grid-row: 1 / 2;
+    }
+
+    .date{
+        grid-row-start: 3;
+        grid-column: 1/2;
+        font-size: 12px;
+        color: rgb(194, 237, 194);
+    }
+
+    .date::before{
+        content: 'Date created :  ';
+        font-weight: bold;
+       
+    }
+
+    .qzid{
+        display: block;
+        font-size: 10px;
+        color: rgb(194, 237, 194);
+        
+    }
+}
+
+
 
 .cardstyle:nth-last-child(2) {
     flex-grow: 1;

@@ -19,6 +19,11 @@ function quizWarevent(){
 	alert("This feature not currently available");
 }
 
+function changeView(){
+	console.log("view changed");
+	document.querySelector(".daycontnr").classList.toggle("dtailed");
+}
+
 // Event listeners
 newqz.addEventListener("click",newquiz);
 qzwar.addEventListener("click",quizWarevent);
@@ -26,8 +31,11 @@ qzwar.addEventListener("click",quizWarevent);
 dbObj.doWith = (data) => {
 	const card = document.createElement('div');
 	card.className = "cardstyle";
-	card.innerHTML = data.value.numOfQstns;
 	card.setAttribute("onclick", `select('${data.key}')`);
+
+	const nofQstns = document.createElement('div');
+	nofQstns.className = "no-of-qstns";
+	nofQstns.innerHTML = `${data.value.numOfQstns}`;
 
 	const day = document.createElement('div');
 	day.className = "daystyle";
@@ -37,9 +45,15 @@ dbObj.doWith = (data) => {
 	const date = document.createElement('div');
 	date.className = "date";
 	date.innerHTML = data.value.Quizdate;
-
+	
+	const qzid = document.createElement('div');
+	qzid.className = "qzid";
+	qzid.innerHTML ="Quiz ID : " +  data.value.Quizid;
+	
+    card.appendChild(nofQstns);
 	card.appendChild(day);
+	card.appendChild(qzid);
 	card.appendChild(date);
-	daycntnr.appendChild(card)
+	daycntnr.prepend(card)
 }
 Listelems();
