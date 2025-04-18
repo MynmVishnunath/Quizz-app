@@ -1,13 +1,4 @@
-unicorn.png
-Bg.jpg
-Bg4.jpg
-Bg2.jpg
-previous.svg
-next.svg
-check-solid.svg
+
+src/images
+src/icons
 .vscode
-home.svg
-repeat.svg
-like.svg
-deslike.svg
-tick.svg

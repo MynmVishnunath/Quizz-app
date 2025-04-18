@@ -7,12 +7,12 @@ const qzwar = document.querySelector(".quiz-war");
 async function select(data) {
 	//alert("hellook");
 	await localStorage.setItem("selectedValue", '' + data);
-	window.open("gamePlay.html", "_self");
+	window.open("Pages/gamePlay.html", "_self");
 }
 
 
 function newquiz() {
-	window.open("createQuizz.html", "_self")
+	window.open("Pages/createQuizz.html", "_self")
 }
 
 function quizWarevent(){

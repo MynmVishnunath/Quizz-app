@@ -82,13 +82,13 @@ function whatsThe_status_class(quiz_obj){
 function whatsThe_status(option,quiz_obj){
     const obj = {};
     if((option === quiz_obj.selectedOption) && (option === quiz_obj.answer)){
-        obj.img = "like.svg";
+        obj.img = "../src/icons/like.svg";
         obj.class = "right"
     }else if((option === quiz_obj.selectedOption) && !(option === quiz_obj.answer)){
-        obj.img = "deslike.svg";
+        obj.img = "../src/icons/deslike.svg";
         obj.class = "wrong";
     }else if(option === quiz_obj.answer){
-        obj.img = "tick.svg";
+        obj.img = "../src/icons/tick.svg";
         obj.class = "right";
     }else{
         obj.img = "";
@@ -110,11 +110,11 @@ function whatsThe_status_value(quiz_obj){
 }
 
 function gotoHome(){
-    window.open("chooseQuiz.html","_self");
+    window.open("../chooseQuiz.html","_self");
 }
 
 function backToQuiz(){
-    window.open("gamePlay.html","_self");
+    window.open("../Pages/gamePlay.html","_self");
 }
 
 // Event Listneres

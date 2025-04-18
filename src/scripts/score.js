@@ -78,11 +78,11 @@ function displayScore() {
 }
 
 function gotoHome(){
-    window.open("chooseQuiz.html","_self");
+    window.open("../chooseQuiz.html","_self");
 }
 
 function reviewQuiz(){
-    window.open("history.html","_self");
+    window.open("../Pages/history.html","_self");
 }
 
 function showValues() {
