@@ -81,12 +81,17 @@ function gotoHome(){
     window.open("chooseQuiz.html","_self");
 }
 
+function reviewQuiz(){
+    window.open("history.html","_self");
+}
+
 function showValues() {
     document.querySelector("#myScore").innerHTML = `${result.total_score}/${scoreGuide.max_score}`;
     document.querySelector(".right").innerHTML = `Right Answer : ${result.numof_rightanswer}`;
     document.querySelector(".wrong").innerHTML = `Wrong Answer : ${result.numof_wronganswer}`;
     document.querySelector(".unattempt").innerHTML = `Unattempt : ${result.numof_unattempt}`;
-    document.querySelector(".home").addEventListener("click",gotoHome)
+    document.querySelector(".home").addEventListener("click",gotoHome);
+    document.querySelector(".review").addEventListener("click",reviewQuiz);
     setTimeout(() => {
 
         document.querySelector(".container1").style.display = 'none';

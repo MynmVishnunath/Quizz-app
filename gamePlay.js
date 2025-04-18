@@ -73,6 +73,7 @@ function eventListnerforOptitons(parentCard, qzid) {
   //prevent checking radio while  clicking and select option when click twice
   radio.forEach(x => {
     x.addEventListener("click", (e) => {
+      
       clickCount = (clickCount == 2) ? 2 : ++clickCount;
       if (flag) {
         setTimeout(() => {
