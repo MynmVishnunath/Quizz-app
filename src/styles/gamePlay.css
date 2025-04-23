@@ -140,6 +140,7 @@ justify-content: space-around;
  }
 }
 
+
 @media  (width<700px) {
   #container{
   background:url("../images/Bg2.jpg");

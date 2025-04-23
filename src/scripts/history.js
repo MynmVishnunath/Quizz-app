@@ -17,7 +17,6 @@ window.onload = async () => {
     readDatabase();
 
 }
-
 async function readDatabase() {
     console.log("function working");
     for (let i = 0; i < totalQuestions; i++) {
@@ -107,6 +106,7 @@ function whatsThe_status_value(quiz_obj){
      }else{
         return "Wrong";
      }
+     
 }
 
 function gotoHome(){
