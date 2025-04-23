@@ -9,6 +9,12 @@ function openDatabase(){
 
 return new Promise((res,rej)=>{
  let req=indexedDB.open("QuizzApp",1);
+ req.onupgradeneeded=event=>{
+  db=event.target.result;
+  let objStore=db.createObjectStore("Quizz list",{keyPath:"Qstnid"});
+  let metaStore=db.createObjectStore("Quizz meta",{keyPath:"Quizid"});
+  
+}
  req.onsuccess=event=>{
  db=event.target.result;
  res(db);

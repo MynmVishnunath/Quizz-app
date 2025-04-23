@@ -19,7 +19,7 @@ function openDatabase(){
   }
   
   req.onsuccess=evnt=>{
-    db=event.target.result;
+    db=evnt.target.result;
     res(db);
   }
   
