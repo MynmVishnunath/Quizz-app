@@ -136,7 +136,7 @@ body {
     background-size: cover;
   }
   .btn-holder{
-    bottom: 8%;
+    top: 95%;
     right: 2%;
   }
 }
