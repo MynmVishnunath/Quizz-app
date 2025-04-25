@@ -135,4 +135,8 @@ body {
     background: url("../images/Bg2.jpg");
     background-size: cover;
   }
+  .btn-holder{
+    bottom: 2%;
+    right: 2%;
+  }
 }
