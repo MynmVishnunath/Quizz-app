@@ -3,8 +3,8 @@
       this.#element = elem;
       this.#elementProp = this.#element.getBoundingClientRect();
 
-      //touch events
-      // this.#element.addEventListener("touchstart",this.#startMove);
+      //touch and mouse move events
+      this.#element.addEventListener("touchstart",this.#startMove);
       this.#element.addEventListener("mousedown", this.#startMove);
 
     }
@@ -15,14 +15,14 @@
     #letsMove = function () { };
     //touch handling functions.
     #startMove = (e) => {
-      // this.#element.addEventListener("touchmove",this.#moveWithtouch);
-      this.#element.addEventListener("mousemove", this.#moveWithtouch);
-      // this.#element.addEventListener("touchend",this.#endMove);
+       this.#element.addEventListener("touchmove",this.#moveWithtouch);
+      this.#element.addEventListener("mousemove", this.#moveWithmouse);
+      this.#element.addEventListener("touchend",this.#endMove);
       this.#element.addEventListener("mouseup", this.#endMove);
       this.doFunc.onstart();
     }
 
-    #moveWithtouch = (e) => {
+    #moveWithmouse = (e) => {
       //console.log("i like to moving moving");
       this.#elementProp = this.#element.getBoundingClientRect();
       // let {clientX,clientY}=e.touches[0];
@@ -33,10 +33,23 @@
 
     }
 
+    #moveWithtouch = (e) => {
+      //console.log("i like to moving moving");
+      this.#elementProp = this.#element.getBoundingClientRect();
+      let {clientX,clientY}=e.touches[0];
+      //let { clientX, clientY } = e;
+      this.touch = { x: clientX, y: clientY };
+      this.#letsMove();
+      this.doFunc.onmove(this.touch);
+
+    }
+
     #endMove = (e) => {
 
       this.doFunc.onend();
-      this.#element.removeEventListener("mousemove", this.#moveWithtouch)
+      this.#element.removeEventListener("mousemove", this.#moveWithmouse);
+      this.#element.removeEventListener("touchmove", this.#moveWithtouch)
+
     }
 
     //public properties
