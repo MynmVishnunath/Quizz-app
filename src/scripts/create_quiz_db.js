@@ -10,7 +10,7 @@ window.onload=async ()=>{
 function openDatabase(){
   let db;
   return new Promise((res,rej)=>{
-  let req=indexedDB.open("QuizzApp",1);
+  let req=indexedDB.open("QuizzApp",2);
   req.onupgradeneeded=event=>{
     db=event.target.result;
     let objStore=db.createObjectStore("Quizz list",{keyPath:"Qstnid"});

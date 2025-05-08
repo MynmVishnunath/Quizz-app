@@ -8,11 +8,12 @@ const dbObj ={
 function openDatabase(){
 
 return new Promise((res,rej)=>{
- let req=indexedDB.open("QuizzApp",1);
+ let req=indexedDB.open("QuizzApp",2);
  req.onupgradeneeded=event=>{
   db=event.target.result;
   let objStore=db.createObjectStore("Quizz list",{keyPath:"Qstnid"});
   let metaStore=db.createObjectStore("Quizz meta",{keyPath:"Quizid"});
+  let aiStore=db.createObjectStore("Ai_Gen_Quiz",{autoIncrement:true});
   
 }
  req.onsuccess=event=>{
