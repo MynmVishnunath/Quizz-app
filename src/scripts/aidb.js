@@ -30,6 +30,43 @@ function store(objectStore,data){
     }
 }
 
+function readData(objectStore,id){
+    return new Promise((res,rej) => {
+        let request = objectStore.get(id);
+        request.onsuccess = (event) => {
+            let data = event.target.result;
+            res(data);
+        }
+        request.onerror = (error)=>{
+            rej(error);
+            throw new Error(`Failed to read data ${error}`);
+        }
+    });
+    
+}
+
+function saveSelection(store,id, option) {
+    return new Promise((res, rej) => {
+      let readreq = store.get(id);
+      readreq.onsuccess = event => {
+        let obj = event.target.result;
+        obj.selectedOption = option;
+        store.put(obj).onsuccess = () => {
+          res();
+        }
+      }
+      readreq.onerror = event => {
+        console.log("cant read question");
+        rej();
+      }
+
+      transaction.onerror = (event) => {
+        console.log("failed to store selected option due to", event.target.error);
+        rej();
+      }
+    });
+  }
+
 function clearAllrecord(){
     const transaction = db.transaction("Ai_Gen_Quiz","readwrite");
     const objsectstore = transaction.objectStore("Ai_Gen_Quiz");
