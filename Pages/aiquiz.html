@@ -3,10 +3,81 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>AI Quiz</title>
 </head>
 <body>
+      <div id="container">
+        <div class="cloudbx">
+            <div class="cloud">
+                <div class="foam1"></div>
+                <div class="foam2"></div>
+            </div>
+            <div class="cloud">
+                <div class="foam1"></div>
+                <div class="foam2"></div>
+            </div>
+            <div class="cloud">
+                <div class="foam1"></div>
+                <div class="foam2"></div>
+            </div>
+            <div class="cloud">
+                <div class="foam1"></div>
+                <div class="foam2"></div>
+            </div>
+            <div class="cloud">
+                <div class="foam1"></div>
+                <div class="foam2"></div>
+            </div>
+        </div>
+    </div>
+
+        <div class="card-container"></div>
+
+         <div class="btn-holder">
+        <button class="btn sub-btn" disabled>
+            <img src="../src/icons/check-solid.svg" alt="">
+        </button>
+        <button class="btn next-btn">
+            <img src="../src/icons/next.svg" alt="">
+        </button>
+        <button class="btn prev-btn">
+            <img src="../src/icons/previous.svg" alt="">
+        </button>
+    </div>
+
+       <dialog class="dlogBox">
+        <div class="container1">
+            <div class="dot1"></div>
+            <div class="dot1"></div>
+            <div class="dot1"></div>
+        </div>
+        <div class="piechart">
+            <svg class="svg" width="200" height="200" viewBox="0 0 150 150">
+
+            </svg>
+            <div class="value">
+                <div class="head">Score :</div>
+                <div class="score" id="myScore">78/100</div>
+            </div>
+        </div>
+        <div class="right">Right Answer : 5</div>
+        <div class="wrong">Wrong Answer : 3</div>
+        <div class="unattempt">Unattemted : 2</div>
+        <div class="home">
+            Go to home
+            <img src="../src/icons/home.svg" alt="">
+        </div>
+        <div class="review">
+            Review
+            <img src="../src/icons/repeat.svg" alt="">
+        </div>
+    </dialog>
+    
     <script src="../src/scripts/aidb.js"></script>
+    <script src="../src/scripts/swiper.js"></script>
+    <script src="../src/scripts/swipercard.js"></script>
     <script src="../src/scripts/aiquiz.js"></script>
+     <script src="../src/scripts/scoreai.js"></script>
+    <script src="../src/scripts/aiquizplay.js"></script>
 </body>
 </html>
