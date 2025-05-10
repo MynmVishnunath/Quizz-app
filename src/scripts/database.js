@@ -13,7 +13,7 @@ return new Promise((res,rej)=>{
   db=event.target.result;
   let objStore=db.createObjectStore("Quizz list",{keyPath:"Qstnid"});
   let metaStore=db.createObjectStore("Quizz meta",{keyPath:"Quizid"});
-  let aiStore=db.createObjectStore("Ai_Gen_Quiz",{autoIncrement:true});
+  let aiStore=db.createObjectStore("Ai_Gen_Quiz",{keyPath:"Qno"});
   
 }
  req.onsuccess=event=>{

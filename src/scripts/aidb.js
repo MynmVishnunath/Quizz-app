@@ -60,10 +60,7 @@ function saveSelection(store,id, option) {
         rej();
       }
 
-      transaction.onerror = (event) => {
-        console.log("failed to store selected option due to", event.target.error);
-        rej();
-      }
+      
     });
   }
 

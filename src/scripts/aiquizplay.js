@@ -40,9 +40,11 @@ function prev() {
     if (!checked) {
       //select
       selectedOption.classList.add("checked");
+      let Object_Store = await open_transaction();
       await saveSelection(Object_Store, qzid, selectedOption.value);
     } else {
       // Deselect
+      let Object_Store = await open_transaction();
       await saveSelection(Object_Store, qzid, "");
     }
   
@@ -112,7 +114,8 @@ function nextIndexchange() {
 let createComponent = async (qid = 0) => {
     const currentQzid = qid;
     console.log(currentQzid);
-    const currentQuestion = await getQuestion(currentQzid);
+    let Object_Store = await open_transaction();
+    const currentQuestion = await readData(Object_Store,currentQzid);
     let component = `
             <div class="qcard">
             <div class="question">
@@ -189,4 +192,6 @@ cardStack.funcWithNxt = async () => {
   
   
   }
+
+  
   

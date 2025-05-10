@@ -43,10 +43,11 @@ async function loadData() {
 }
 
 async function calculateScore() {
-    console.log(qzid);
+    // console.log(qzid);
     await loadData();
     for (let i = 0; i < totalQuestions; i++) {
-        let qstnid = i+1;
+        let qstnid = i;
+        let Object_Store = await open_transaction();
         let obj = await readData(Object_Store,qstnid);
         switch (obj.selectedOption) {
             case obj.answer:
