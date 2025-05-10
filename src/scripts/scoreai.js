@@ -59,6 +59,10 @@ async function calculateScore() {
                 console.log("not answered");
                 result.numof_unattempt++;
                 break;
+            case undefined:
+                console.log("not answered");
+                result.numof_unattempt++;
+                break;
 
             default:
                 result.numof_wronganswer++;

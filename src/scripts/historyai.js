@@ -71,7 +71,7 @@ function optionList(quiz_obj) {
 }
 
 function whatsThe_status_class(quiz_obj){
- if(quiz_obj.selectedOption === ""){
+ if(quiz_obj.selectedOption === "" || !quiz_obj.selectedOption){
     return "noanswer";
  }else if(quiz_obj.selectedOption === quiz_obj.answer){
     return "right";
@@ -101,7 +101,7 @@ function whatsThe_status(option,quiz_obj){
 }
 
 function whatsThe_status_value(quiz_obj){
-    if(quiz_obj.selectedOption === ""){
+    if(quiz_obj.selectedOption === "" || !quiz_obj.selectedOption){
         return "Not answered";
      }else if(quiz_obj.selectedOption === quiz_obj.answer){
         return "Right";
