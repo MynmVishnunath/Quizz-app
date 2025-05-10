@@ -42,13 +42,14 @@ async function loadData() {
 
 }
 
+//collecting data from indexed Db then calculate the score then calls the function to display the score
 async function calculateScore() {
     // console.log(qzid);
     await loadData();
     for (let i = 0; i < totalQuestions; i++) {
         let qstnid = i;
         let Object_Store = await open_transaction();
-        let obj = await readData(Object_Store,qstnid);
+        let obj = await readData(Object_Store, qstnid);
         switch (obj.selectedOption) {
             case obj.answer:
                 result.total_score += scoreGuide.positivePoint;
@@ -69,7 +70,7 @@ async function calculateScore() {
     displayScore();
 }
 
-
+//Displays the pie chart and score obtained on dialogue box
 function displayScore() {
     // clear card container
     dlog.showModal();
@@ -77,21 +78,22 @@ function displayScore() {
     showValues();
 }
 
-function gotoHome(){
+function gotoHome() {
     //window.open("../chooseQuiz.html","_self");
 }
 
-function reviewQuiz(){
-    //window.open("../Pages/history.html","_self");
+function reviewQuiz() {
+    window.open("../Pages/historyai.html","_self");
 }
 
+// shows score gained in numerical values
 function showValues() {
     document.querySelector("#myScore").innerHTML = `${result.total_score}/${scoreGuide.max_score}`;
     document.querySelector(".right").innerHTML = `Right Answer : ${result.numof_rightanswer}`;
     document.querySelector(".wrong").innerHTML = `Wrong Answer : ${result.numof_wronganswer}`;
     document.querySelector(".unattempt").innerHTML = `Unattempt : ${result.numof_unattempt}`;
-    document.querySelector(".home").addEventListener("click",gotoHome);
-    document.querySelector(".review").addEventListener("click",reviewQuiz);
+    document.querySelector(".home").addEventListener("click", gotoHome);
+    document.querySelector(".review").addEventListener("click", reviewQuiz);
     setTimeout(() => {
 
         document.querySelector(".container1").style.display = 'none';
@@ -99,6 +101,7 @@ function showValues() {
 
 }
 
+// function to select colors for the each border of pie chart
 function chooseColor(index) {
     if (index < result.rightanswer_percetn) {
         return "green";
@@ -110,6 +113,7 @@ function chooseColor(index) {
 
 }
 
+// Pie chart drawing function
 function drawCoords() {
     const cx = 75;
     const cy = 75;

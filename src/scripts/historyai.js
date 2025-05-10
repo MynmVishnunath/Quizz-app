@@ -1,18 +1,17 @@
+// Modification of history js file
+
 // Global variables
-let totalQuestions;
+let totalQuestions = 5;
 const body = document.querySelector(".history-container");
 const home_btn = document.querySelector(".home");
-const quiz_btn = document.querySelector(".quiz")
+const quiz_btn = document.querySelector(".quiz");
 
-//onload function
+// onload function
 
 window.onload = async () => {
-    qzid = await localStorage.getItem("selectedValue");
-    dbqs = await openDatabase();
+    // qzid = await localStorage.getItem("selectedValue");
+     await openDatabase();
     console.log("line 2");
-    const metaData = await readMeta();
-    console.log(metaData);
-    totalQuestions = metaData.numOfQstns;
     console.log(totalQuestions);
     readDatabase();
 
@@ -22,8 +21,8 @@ window.onload = async () => {
 async function readDatabase() {
     console.log("function working");
     for (let i = 0; i < totalQuestions; i++) {
-        
-        const qobj = await getQuestion(qzid + i);
+        let object_Store = await open_transaction();
+        const qobj = await readData(object_Store,i);
         // new QuestionHis(qobj);
         console.log(qobj);
        await createQuizcard(qobj);
@@ -117,7 +116,7 @@ function gotoHome(){
 }
 
 function backToQuiz(){
-    window.open("../Pages/gamePlay.html","_self");
+    // window.open("../Pages/gamePlay.html","_self");
 }
 
 // Event Listneres
