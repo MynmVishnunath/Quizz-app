@@ -60,7 +60,7 @@ function parseToObject(string) {
 function responsetoDb(Object_Store, response) {
   // progress status
   progress.changestatus("store quiz to database...");
-  
+
   qzObj = parseToObject(response);
   totalQuestions = qzObj.length;
   sessionStorage.setItem("aiq_num",totalQuestions);
@@ -77,13 +77,25 @@ function responsetoDb(Object_Store, response) {
   document.querySelector(".start-quiz").disabled = false;
 }
 
-function simulateResponse() {
+function make_quiz(topic, mode, noofqstns) {
+  // progress status
   progress.changestatus("waiting for response...");
-  setTimeout(async () => {
-    progress.changestatus("response got");
-    progress.growProgress(50);
-    let Object_Store = await open_transaction();
-    responsetoDb(Object_Store, res);
-  },1000);
+  const prompt = `Generate quiz using the following details
+   Topic : ${topic}
+    Mode : ${mode}
+     number of questions : ${noofqstns} 
+     using the following format to create quiz 
+     <<Quiz>> [ {"Qno":0, "question":question1,"options":[op1,op2,op3,op4],"answer":op1 ] <</Quiz>> 
+     response should be in json varified string inside those two tags, 
+     nb : if the topic is not recoganisable choose a random topic as your wish, Qno is like index start it from 0`;
+     puter.ai.chat(prompt).then(async (response) => {
+      // update progress status
+      progress.changestatus("response received");
+      progress.growProgress(50);
+      // open transaction
+      let Object_Store = await open_transaction();
+      // store data to indexedDB
+      responsetoDb(Object_Store, response);
+     });
 }
 

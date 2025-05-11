@@ -125,7 +125,7 @@ function generate_quiz() {
   const topic_collect = document.querySelector(".topic-collect-dlog");
   topic_collect.close();
   progress_dlog.showModal();
-  simulateResponse();
+  make_quiz(topic.value, mode.value, noofqstns.value);
 }
 
 function enable_or_disable_generate() {
