@@ -6,6 +6,9 @@ let totalQuestions;
 const prevbtn = document.querySelector(".prev-btn");
 const nextbtn = document.querySelector(".next-btn");
 const submitbtn = document.querySelector(".sub-btn");
+const generatebtn = document.querySelector(".generate");
+const topic = document.querySelector("#topic");
+const noofqstns = document.querySelector("#num-of-Qstns");
 
 //page functions
 
@@ -110,6 +113,21 @@ function nextIndexchange() {
     return prevIndex;
   }
 
+  function generate_quiz(){
+    console.log("Generate quiz");
+    const mode =  document.querySelector("#mode");
+    sessionStorage.setItem("aiq_topic",topic.value);
+    sessionStorage.setItem("aiq_num",noofqstns.value);
+    sessionStorage.setItem("aiq_mode",mode.value);
+     const topic_collect = document.querySelector(".topic-collect-dlog");
+    topic_collect.close();
+  }
+
+  function enable_or_disable_generate(){
+    if(noofqstns.value && topic.value)
+      generatebtn.disabled = false;
+  }
+  
   //quiz ui creating function
 let createComponent = async (qid = 0) => {
     const currentQzid = qid;
@@ -163,9 +181,13 @@ function startQuiz(){
 
 // set event listners to elements
 
+noofqstns.addEventListener("change",enable_or_disable_generate);
+topic.addEventListener("change",enable_or_disable_generate);
+generatebtn.addEventListener("click",generate_quiz);
 prevbtn.addEventListener("click", prev);
 nextbtn.addEventListener("click", next);
 submitbtn.addEventListener("click", submit);
+
 
 // creating cardstack
 const cardStack = new CardStack({

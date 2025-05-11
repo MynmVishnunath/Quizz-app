@@ -1,16 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AI Quiz</title>
-     <link rel="stylesheet" href="../src/styles/gamePlay.css">
+    <link rel="stylesheet" href="../src/styles/gamePlay.css">
     <link rel="stylesheet" href="../src/styles/swipercard.css">
     <link rel="stylesheet" href="../src/styles/quizincard.css">
     <link rel="stylesheet" href="../src/styles/dialog.css">
+    <link rel="stylesheet" href="../src/styles/topic_dialog.css">
 </head>
+
 <body>
-      <div id="container">
+    
+    <div id="container">
         <div class="cloudbx">
             <div class="cloud">
                 <div class="foam1"></div>
@@ -35,9 +39,9 @@
         </div>
     </div>
 
-        <div class="card-container"></div>
+    <div class="card-container"></div>
 
-         <div class="btn-holder">
+    <div class="btn-holder">
         <button class="btn sub-btn" disabled>
             <img src="../src/icons/check-solid.svg" alt="">
         </button>
@@ -48,8 +52,27 @@
             <img src="../src/icons/previous.svg" alt="">
         </button>
     </div>
+ <dialog class="topic-collect-dlog">
+         <label>Topic :</label>
+        <input type="text" name="topic" id="topic" required >
+        <br>
+        <label>No Of Question :</label>
+        <input type="number" name="num-of-Qstns" id="num-of-Qstns" required>
+        <details><summary>Advanced Option</summary>
+            <label>Select Mode :</label>
+            <select name="mode" id="mode">
+                <option value="easy">Easy</option>
+                <option value="beginner">Beginner</option>
+                <option value="intermediate">Intermediate</option>
+                <option value="pro">Pro</option>
+                <option value="hard">Hard</option>
+                <option value="very-hard">Very Hard</option>
+            </select>
+        </details>
+        <button disabled class="generate">Generate</button>
+    </dialog>
 
-       <dialog class="dlogBox">
+    <dialog class="dlogBox">
         <div class="container1">
             <div class="dot1"></div>
             <div class="dot1"></div>
@@ -76,12 +99,15 @@
             <img src="../src/icons/repeat.svg" alt="">
         </div>
     </dialog>
-    
+
+
+
     <script src="../src/scripts/aidb.js"></script>
     <script src="../src/scripts/swiper.js"></script>
     <script src="../src/scripts/swipercard.js"></script>
     <script src="../src/scripts/aiquiz.js"></script>
-     <script src="../src/scripts/scoreai.js"></script>
+    <script src="../src/scripts/scoreai.js"></script>
     <script src="../src/scripts/aiquizplay.js"></script>
 </body>
+
 </html>

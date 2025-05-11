@@ -1,0 +1,86 @@
+.topic-collect-dlog::backdrop {
+    background: hsl(109, 16%, 80%);
+    width: 100%;
+    height: 100%;
+
+
+}
+
+.topic-collect-dlog {
+    width: 280px;
+
+    max-height: 600px;
+    background: hsl(191 28% 99% / 1);
+    padding: 0px 15px;
+    border: none;
+    border-top: 6px solid #035018;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    color: hsl(109, 92%, 10%);
+
+    /* align center */
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+}
+
+
+
+label,
+input {
+    margin-top: 10px;
+    outline: none;
+
+}
+
+input {
+    border: 0.5px solid rgb(0, 42, 0);
+    border-radius: 2px;
+    height: 25px;
+    padding-left: 5px;
+}
+
+input:nth-child(2) {
+    margin-left: 11px;
+
+}
+
+input[type="number"] {
+    width: 102px;
+}
+
+details {
+    margin-top: 10px;
+
+}
+
+summary {
+    background: hsl(210.46deg 12.18% 89.31%);
+    padding: 0px 0px 0px 7px;
+    margin-bottom: 9px;
+}
+
+select {
+    margin-bottom: 10px;
+    margin-left: 10px;
+    border: 0.5px solid rgb(0, 42, 0);
+
+}
+
+button {
+    width: 99%;
+    height: 30px;
+    color: white;
+    background: green;
+    border: none;
+    border-radius: 10px;
+    margin-bottom: 10px;
+    margin-top: 15px;
+    font-size: 14px;
+}
+button:disabled{
+    
+    filter: contrast(0.5) brightness(1.2);
+}

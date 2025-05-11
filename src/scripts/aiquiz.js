@@ -32,10 +32,14 @@ let res = `<<Quiz>> [
   }
 ] <</Quiz>>
 `
+// Select topic collect dialog 
+
 //Load function
 window.onload = async () => {
-    await openDatabase();
-    clearAllrecord();
+  await openDatabase();
+  clearAllrecord();
+    const topic_collect = document.querySelector(".topic-collect-dlog");
+    topic_collect.showModal();
     let  Object_Store = await open_transaction();
     responsetoDb(Object_Store, res);
     setTimeout(startQuiz,1000);
@@ -50,12 +54,14 @@ function parseToObject(string){
     return  JSON.parse(string);
     
 }
+
+
 function responsetoDb(Object_Store,response){
     qzObj = parseToObject(response);
     qzObj.forEach(element => {
         console.log(element);
         store(Object_Store,element);
     });
-    alert(Object_Store,"from aiquiz");
+    // alert(Object_Store,"from aiquiz");
 }
 
