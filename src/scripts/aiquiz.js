@@ -1,4 +1,6 @@
 // Global variables
+const progress = new Progress();
+let totalQuestions;//global for aiquizplay, aiquiz, progress and scoreai
 let res = `<<Quiz>> [
   {
     "Qno":0,
@@ -38,30 +40,50 @@ let res = `<<Quiz>> [
 window.onload = async () => {
   await openDatabase();
   clearAllrecord();
-    const topic_collect = document.querySelector(".topic-collect-dlog");
-    topic_collect.showModal();
-    let  Object_Store = await open_transaction();
-    responsetoDb(Object_Store, res);
-    setTimeout(startQuiz,1000);
+  const topic_collect = document.querySelector(".topic-collect-dlog");
+  topic_collect.showModal();
+
+
 
 }
 // functions
 
-function parseToObject(string){
-    let startIndex = string.match("<<Quiz>>").index + "<<Quiz>>".length;
-    let lastIndex = string.match("<</Quiz>>").index;
-    string = string.slice(startIndex,lastIndex);
-    return  JSON.parse(string);
-    
+function parseToObject(string) {
+  let startIndex = string.match("<<Quiz>>").index + "<<Quiz>>".length;
+  let lastIndex = string.match("<</Quiz>>").index;
+  string = string.slice(startIndex, lastIndex);
+  return JSON.parse(string);
+
 }
 
 
-function responsetoDb(Object_Store,response){
-    qzObj = parseToObject(response);
-    qzObj.forEach(element => {
-        console.log(element);
-        store(Object_Store,element);
-    });
-    // alert(Object_Store,"from aiquiz");
+function responsetoDb(Object_Store, response) {
+  // progress status
+  progress.changestatus("store quiz to database...");
+  
+  qzObj = parseToObject(response);
+  totalQuestions = qzObj.length;
+  sessionStorage.setItem("aiq_num",totalQuestions);
+
+  let i = 0;
+  qzObj.forEach(element => {
+    console.log(element);
+    store(Object_Store, element);
+    // Updating progress while filling data to Object store
+    progress.growProgress(50 + (50/totalQuestions)*(++i));
+  });
+  progress.changestatus("completed");
+  // Enabling the play button  in progress dialog
+  document.querySelector(".start-quiz").disabled = false;
+}
+
+function simulateResponse() {
+  progress.changestatus("waiting for response...");
+  setTimeout(async () => {
+    progress.changestatus("response got");
+    progress.growProgress(50);
+    let Object_Store = await open_transaction();
+    responsetoDb(Object_Store, res);
+  },1000);
 }
 

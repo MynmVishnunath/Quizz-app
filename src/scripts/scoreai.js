@@ -35,7 +35,7 @@ const result = {
 }
 
 async function loadData() {
-    scoreGuide.totalQuestions = 5;
+    scoreGuide.totalQuestions = +sessionStorage.getItem("aiq_num");
     scoreGuide.max_score = scoreGuide.positivePoint * scoreGuide.totalQuestions;
     return;
 

@@ -10,10 +10,11 @@
     <link rel="stylesheet" href="../src/styles/quizincard.css">
     <link rel="stylesheet" href="../src/styles/dialog.css">
     <link rel="stylesheet" href="../src/styles/topic_dialog.css">
+    <link rel="stylesheet" href="../src/styles/progress_dlog.css">
 </head>
 
 <body>
-    
+
     <div id="container">
         <div class="cloudbx">
             <div class="cloud">
@@ -52,13 +53,14 @@
             <img src="../src/icons/previous.svg" alt="">
         </button>
     </div>
- <dialog class="topic-collect-dlog">
-         <label>Topic :</label>
-        <input type="text" name="topic" id="topic" required >
+    <dialog class="topic-collect-dlog">
+        <label>Topic :</label>
+        <input type="text" name="topic" id="topic" required>
         <br>
-        <label>No Of Question :</label>
+        <label>No Of Questions :</label>
         <input type="number" name="num-of-Qstns" id="num-of-Qstns" required>
-        <details><summary>Advanced Option</summary>
+        <details>
+            <summary>More Option</summary>
             <label>Select Mode :</label>
             <select name="mode" id="mode">
                 <option value="easy">Easy</option>
@@ -70,6 +72,26 @@
             </select>
         </details>
         <button disabled class="generate">Generate</button>
+    </dialog>
+
+    <dialog class="progress-dlog">
+        <!-- code snippet borrowed from https://codepen.io/Curlmuhi/pen/YzqpmZe -->
+         <section>
+        <div class="box">
+            <div class="percent">
+                <svg>
+                    <circle cx="70" cy="70" r="70"></circle>
+                    <circle cx="70" cy="70" r="70"></circle>
+                </svg>
+                <div class="num">
+                    <h2 class="percentmeter">0<span>%</span></h2>
+                </div>
+            </div>
+            <h2 class="text percent-status">Progress</h2>
+        </div>
+        <button disabled class="start-quiz">Let's Play</button>
+        </section>
+
     </dialog>
 
     <dialog class="dlogBox">
@@ -105,6 +127,7 @@
     <script src="../src/scripts/aidb.js"></script>
     <script src="../src/scripts/swiper.js"></script>
     <script src="../src/scripts/swipercard.js"></script>
+    <script src="../src/scripts/progress.js"></script>
     <script src="../src/scripts/aiquiz.js"></script>
     <script src="../src/scripts/scoreai.js"></script>
     <script src="../src/scripts/aiquizplay.js"></script>

@@ -1,7 +1,7 @@
 // Modification of history js file
 
 // Global variables
-let totalQuestions = 5;
+let totalQuestions = sessionStorage.getItem("aiq_num");
 const body = document.querySelector(".history-container");
 const home_btn = document.querySelector(".home");
 const quiz_btn = document.querySelector(".quiz");
