@@ -47,3 +47,20 @@ async function Listelems(){
     let db=await openDatabase();
     await readEachrecord(db);
 }
+
+function deleteDatabase(){
+  console.log('function called');
+  if(db){
+    db.close();
+    console.log("db closed");
+  }
+  let req=indexedDB.deleteDatabase("QuizzApp");
+  req.onsuccess = ()=>{
+    console.log("deleted successfully");
+    alert("deleted database");
+  }
+  req.onerror = (error) =>{
+    alert("deletion failed");
+    console.error(error);
+  }
+}

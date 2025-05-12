@@ -101,7 +101,7 @@ body {
 .pop-menus{
     border: none;
     border-radius: 5px;
-    height: 90px;
+    height: 120px;
     background-color: rgb(160, 223, 160);
     button{
         width: 100%;

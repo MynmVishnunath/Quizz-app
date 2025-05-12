@@ -3,6 +3,7 @@ const daycntnr = document.body.getElementsByClassName('daycontnr')[0];
 const newqz = document.querySelector(".new-quiz");
 const qzwar = document.querySelector(".quiz-war");
 const qzai = document.querySelector(".quiz-ai");
+const dltdbs = document.querySelector(".deletedbs");
 
 // Functions 
 async function select(data) {
@@ -31,6 +32,7 @@ function changeView(){
 newqz.addEventListener("click",newquiz);
 qzwar.addEventListener("click",quizWarevent);
 qzai.addEventListener("click",quizAIevent);
+dltdbs.addEventListener('click',deleteDatabase)
 
 dbObj.doWith = (data) => {
 	const card = document.createElement('div');
