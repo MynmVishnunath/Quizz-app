@@ -92,10 +92,11 @@ function make_quiz(topic, mode, noofqstns) {
       // update progress status
       progress.changestatus("response received");
       progress.growProgress(50);
+      console.log(response.message.content);
       // open transaction
       let Object_Store = await open_transaction();
       // store data to indexedDB
-      responsetoDb(Object_Store, response);
+      responsetoDb(Object_Store, response.message.content);
      });
 }
 
