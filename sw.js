@@ -36,16 +36,17 @@ self.addEventListener("fetch", (e) => {
 });
 
 async function serverORcache(request) {
+  
   try {
     const res = await fetch(request); // Await the fetch call
-    if( nocaching.includes(request.url)) {
-      console.log("This is message from service worker: This request is in nocaching list, so it will not be cached.");
-      return res; // If the request is in nocaching, return the response directly
-    }
+    const url = new URL(request.url);
+    if(!(/ai/.test(url.pathname))){
     const cache = await caches.open(cache_name); // Await the cache opening
     cache.put(request, res.clone()); // Store the response in the cache
+    }
     return res; // Return the fetched response
   } catch (err) {
+    console.error(err);
     return caches.match(request); // Return the cached response if fetch fails
   }
 }
