@@ -1,18 +1,17 @@
+// Modification of history js file
+
 // Global variables
-let totalQuestions;
+let totalQuestions = sessionStorage.getItem("aiq_num");
 const body = document.querySelector(".history-container");
 const home_btn = document.querySelector(".home");
-const quiz_btn = document.querySelector(".quiz")
+const quiz_btn = document.querySelector(".quiz");
 
-//onload function
+// onload function
 
 window.onload = async () => {
-    qzid = await localStorage.getItem("selectedValue");
-    dbqs = await openDatabase();
+    // qzid = await localStorage.getItem("selectedValue");
+     await openDatabase();
     console.log("line 2");
-    const metaData = await readMeta();
-    console.log(metaData);
-    totalQuestions = metaData.numOfQstns;
     console.log(totalQuestions);
     readDatabase();
 
@@ -22,8 +21,8 @@ window.onload = async () => {
 async function readDatabase() {
     console.log("function working");
     for (let i = 0; i < totalQuestions; i++) {
-        
-        const qobj = await getQuestion(qzid + i);
+        let object_Store = await open_transaction();
+        const qobj = await readData(object_Store,i);
         // new QuestionHis(qobj);
         console.log(qobj);
        await createQuizcard(qobj);
@@ -72,7 +71,7 @@ function optionList(quiz_obj) {
 }
 
 function whatsThe_status_class(quiz_obj){
- if(quiz_obj.selectedOption === ""){
+ if(quiz_obj.selectedOption === "" || !quiz_obj.selectedOption){
     return "noanswer";
  }else if(quiz_obj.selectedOption === quiz_obj.answer){
     return "right";
@@ -102,7 +101,7 @@ function whatsThe_status(option,quiz_obj){
 }
 
 function whatsThe_status_value(quiz_obj){
-    if(quiz_obj.selectedOption === ""){
+    if(quiz_obj.selectedOption === "" || !quiz_obj.selectedOption){
         return "Not answered";
      }else if(quiz_obj.selectedOption === quiz_obj.answer){
         return "Right";
@@ -117,7 +116,7 @@ function gotoHome(){
 }
 
 function backToQuiz(){
-    window.open("../Pages/gamePlay.html","_self");
+    // window.open("../Pages/gamePlay.html","_self");
 }
 
 // Event Listneres

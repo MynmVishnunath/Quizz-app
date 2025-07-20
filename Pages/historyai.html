@@ -1,0 +1,76 @@
+<!-- Modification of history.html file -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz review</title>
+  <link rel="stylesheet" href="../src/styles/history.css">
+</head>
+
+<body>
+
+    <!-- Model Quiz box -->
+    <header class="headr">
+		<div class="highlight">
+			<h1>Review Quiz </h1>
+            <div class="menubox">
+			
+		
+                <button popovertarget="pop-menu" id="pop-btn">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" >
+                        <path 
+                            d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0-4 0zm0-6a2 2 0 1 0 4 0a2 2 0 0 0-4 0zm0 12a2 2 0 1 0 4 0a2 2 0 0 0-4 0z" />
+                    </svg>
+                </button>
+                
+                
+            </div>
+		</div>
+		
+	</header>
+    
+<!-- popover menu -->
+    <div id="pop-menu" class="pop-menus" popover anchor="pop-btn">
+		<button class="quiz">Add to collection</button>
+		<button class="home">Home</button>
+	</div>
+
+    <section class="history-container">
+        <div class="quiz-box" style="display: none;">
+            <div class="status noanswer">
+                Right
+            </div>
+            <div class="question">
+                This Question is a sample question for quiz history page, What is the answer of this Question ?
+            </div>
+            <div class="options">
+                <div class="opt-box right">
+                    <img src="../src/icons/like.svg" alt="">
+                    <div class="option">
+                        Answer of this question is a large text wich can be this or another option your task in this
+                        mission is find the right answer to get positive point if have choose wrong you will get a
+                        negative point
+                    </div>
+                </div>
+                <div class="opt-box wrong">
+                    <img src="../src/icons/deslike.svg" alt="">
+                    <div class="option">You choosed a wrong answer</div>
+                </div>
+                <div class="opt-box">
+                    <img src="../src/icons/tick.svg" alt="">
+                    <div class="option"></div>
+                </div>
+                <div class="opt-box">
+                    <img src="" alt="">
+                    <div class="option"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <script src="../src/scripts/aidb.js"></script>
+    <script src="../src/scripts/historyai.js"></script>
+</body>
+
+</html>

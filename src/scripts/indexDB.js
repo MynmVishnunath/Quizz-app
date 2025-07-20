@@ -6,7 +6,7 @@
 
   function openDatabase() {
     return new Promise((res, rej) => {
-      let request = indexedDB.open("QuizzApp", 1);
+      let request = indexedDB.open("QuizzApp", 2);
       request.onsuccess = evnt => {
         let db = evnt.target.result;
         console.log("connection is successfull");

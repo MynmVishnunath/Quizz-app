@@ -9,6 +9,9 @@ const urlstocache = [
   "/src/images/icon_s.png",
 ];
 
+const nocaching = [
+  "/Pages/aiquiz.html",
+];
 //install event
 self.addEventListener("install", (e) => {
   e.waitUntil(
@@ -33,12 +36,17 @@ self.addEventListener("fetch", (e) => {
 });
 
 async function serverORcache(request) {
+  
   try {
     const res = await fetch(request); // Await the fetch call
+    const url = new URL(request.url);
+    if(!(/ai/.test(url.pathname))){
     const cache = await caches.open(cache_name); // Await the cache opening
     cache.put(request, res.clone()); // Store the response in the cache
+    }
     return res; // Return the fetched response
   } catch (err) {
+    console.error(err);
     return caches.match(request); // Return the cached response if fetch fails
   }
 }

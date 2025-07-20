@@ -8,11 +8,12 @@ const dbObj ={
 function openDatabase(){
 
 return new Promise((res,rej)=>{
- let req=indexedDB.open("QuizzApp",1);
+ let req=indexedDB.open("QuizzApp",2);
  req.onupgradeneeded=event=>{
   db=event.target.result;
   let objStore=db.createObjectStore("Quizz list",{keyPath:"Qstnid"});
   let metaStore=db.createObjectStore("Quizz meta",{keyPath:"Quizid"});
+  let aiStore=db.createObjectStore("Ai_Gen_Quiz",{keyPath:"Qno"});
   
 }
  req.onsuccess=event=>{
@@ -45,4 +46,21 @@ function readEachrecord(db){
 async function Listelems(){
     let db=await openDatabase();
     await readEachrecord(db);
+}
+
+function deleteDatabase(){
+  console.log('function called');
+  if(db){
+    db.close();
+    console.log("db closed");
+  }
+  let req=indexedDB.deleteDatabase("QuizzApp");
+  req.onsuccess = ()=>{
+    console.log("deleted successfully");
+    alert("deleted database");
+  }
+  req.onerror = (error) =>{
+    alert("deletion failed");
+    console.error(error);
+  }
 }
